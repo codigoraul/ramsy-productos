@@ -30,18 +30,92 @@ const imagen = getImagenProducto(producto)
 
   <!-- Producto -->
   <section class="py-16 bg-white">
-    <div class="max-w-[1400px] mx-auto px-10">
+    <div class="max-w-[1200px] mx-auto px-10">
       
       <!-- Grid: Imagen + Info -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-16">
         
-        <!-- Imagen -->
-        <div class="bg-[#F5F5F0] p-8 flex items-center justify-center">
-          <img 
-            src={imagen} 
-            alt={producto.name}
-            class="w-full h-auto max-h-[500px] object-contain"
-          />
+        <!-- Galería de imágenes -->
+        <div>
+          {/* Imagen principal */}
+          <div class="bg-white p-8 flex items-center justify-center mb-4 cursor-zoom-in aspect-square border border-gray-100" id="imagen-principal-container">
+            <img 
+              id="imagen-principal"
+              src={imagen} 
+              alt={producto.name}
+              class="w-full h-full object-contain"
+            />
+          </div>
+          
+          {/* Carrusel de thumbnails */}
+          {producto.images && producto.images.length > 1 && (
+            <div class="relative">
+              {/* Botón anterior */}
+              <button 
+                id="carousel-prev"
+                class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-[#F47920] text-[#0E2346] hover:text-white p-2 shadow-lg transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                aria-label="Anterior"
+              >
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+              </button>
+
+              {/* Contenedor del carrusel */}
+              <div class="overflow-hidden mx-10">
+                <div id="carousel-container" class="flex gap-4 transition-transform duration-300">
+                  {producto.images.map((img, index) => (
+                    <button
+                      class="galeria-thumb flex-shrink-0 bg-[#F5F5F0] p-2 hover:border-2 hover:border-[#F47920] transition-all cursor-pointer"
+                      style="width: calc(25% - 12px);"
+                      data-imagen={img.src}
+                      data-index={index}
+                    >
+                      <img 
+                        src={img.src} 
+                        alt={`${producto.name} - imagen ${index + 1}`}
+                        class="w-full h-auto object-contain"
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Botón siguiente */}
+              <button 
+                id="carousel-next"
+                class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-[#F47920] text-[#0E2346] hover:text-white p-2 shadow-lg transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                aria-label="Siguiente"
+              >
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+              </button>
+            </div>
+          )}
+        </div>
+
+        <!-- Lightbox Modal -->
+        <div id="lightbox" class="fixed inset-0 bg-black bg-opacity-90 z-50 hidden items-center justify-center">
+          <button id="lightbox-close" class="absolute top-4 right-4 text-white text-4xl hover:text-[#F47920] transition-colors z-10">
+            ×
+          </button>
+          
+          <button id="lightbox-prev" class="absolute left-4 text-white text-5xl hover:text-[#F47920] transition-colors z-10">
+            ‹
+          </button>
+          
+          <div class="max-w-6xl max-h-[90vh] flex items-center justify-center px-20">
+            <img id="lightbox-image" src="" alt="" class="max-w-full max-h-[90vh] object-contain">
+          </div>
+          
+          <button id="lightbox-next" class="absolute right-4 text-white text-5xl hover:text-[#F47920] transition-colors z-10">
+            ›
+          </button>
+          
+          <div class="absolute bottom-4 text-white text-sm">
+            <span id="lightbox-counter"></span>
+          </div>
         </div>
 
         <!-- Info del producto -->
@@ -50,7 +124,7 @@ const imagen = getImagenProducto(producto)
             {producto.categories?.[0]?.name || 'Producto'}
           </p>
           
-          <h1 class="text-[#0E2346] font-semibold mb-6" style="font-size: 42px; line-height: 1.08; letter-spacing: -0.025em;">
+          <h1 class="text-[#0E2346] font-semibold mb-6" style="font-size: 34px; line-height: 1.08; letter-spacing: -0.025em;">
             {producto.name}
           </h1>
 
@@ -60,7 +134,7 @@ const imagen = getImagenProducto(producto)
 
           <!-- Precio -->
           <div class="mb-8">
-            <p class="text-[#0E2346] font-semibold mb-2" style="font-size: 2.5rem; letter-spacing: -0.02em;">
+            <p class="text-[#0E2346] font-semibold mb-2" style="font-size: 1.8rem; letter-spacing: -0.02em;">
               {precio}
             </p>
             {producto.sku && (
@@ -340,6 +414,169 @@ const imagen = getImagenProducto(producto)
       }
     })
   })
+
+  // Galería de imágenes functionality
+  const imagenPrincipal = document.getElementById('imagen-principal')
+  const imagenPrincipalContainer = document.getElementById('imagen-principal-container')
+  const galeriaThumbs = document.querySelectorAll('.galeria-thumb')
+  
+  // Array de imágenes para el lightbox
+  const imagenesGaleria = Array.from(galeriaThumbs).map(thumb => thumb.getAttribute('data-imagen'))
+  let currentImageIndex = 0
+  
+  // Lightbox elements
+  const lightbox = document.getElementById('lightbox')
+  const lightboxImage = document.getElementById('lightbox-image')
+  const lightboxClose = document.getElementById('lightbox-close')
+  const lightboxPrev = document.getElementById('lightbox-prev')
+  const lightboxNext = document.getElementById('lightbox-next')
+  const lightboxCounter = document.getElementById('lightbox-counter')
+  
+  // Función para abrir lightbox
+  function openLightbox(index) {
+    currentImageIndex = index
+    updateLightboxImage()
+    lightbox.classList.remove('hidden')
+    lightbox.classList.add('flex')
+    document.body.style.overflow = 'hidden'
+  }
+  
+  // Función para cerrar lightbox
+  function closeLightbox() {
+    lightbox.classList.add('hidden')
+    lightbox.classList.remove('flex')
+    document.body.style.overflow = 'auto'
+  }
+  
+  // Función para actualizar imagen del lightbox
+  function updateLightboxImage() {
+    if (lightboxImage && imagenesGaleria[currentImageIndex]) {
+      lightboxImage.src = imagenesGaleria[currentImageIndex]
+      if (lightboxCounter) {
+        lightboxCounter.textContent = `${currentImageIndex + 1} / ${imagenesGaleria.length}`
+      }
+    }
+  }
+  
+  // Función para ir a la imagen anterior
+  function prevImage() {
+    currentImageIndex = (currentImageIndex - 1 + imagenesGaleria.length) % imagenesGaleria.length
+    updateLightboxImage()
+  }
+  
+  // Función para ir a la siguiente imagen
+  function nextImage() {
+    currentImageIndex = (currentImageIndex + 1) % imagenesGaleria.length
+    updateLightboxImage()
+  }
+  
+  // Event listeners para thumbnails
+  galeriaThumbs.forEach((thumb, index) => {
+    thumb.addEventListener('click', () => {
+      const nuevaImagen = thumb.getAttribute('data-imagen')
+      if (imagenPrincipal && nuevaImagen) {
+        imagenPrincipal.src = nuevaImagen
+        currentImageIndex = index
+        
+        // Remover borde activo de todos los thumbnails
+        galeriaThumbs.forEach(t => t.classList.remove('border-2', 'border-[#F47920]'))
+        
+        // Agregar borde activo al thumbnail clickeado
+        thumb.classList.add('border-2', 'border-[#F47920]')
+      }
+    })
+    
+    // Doble clic para abrir lightbox
+    thumb.addEventListener('dblclick', () => {
+      openLightbox(index)
+    })
+  })
+  
+  // Click en imagen principal para abrir lightbox
+  if (imagenPrincipalContainer) {
+    imagenPrincipalContainer.addEventListener('click', () => {
+      openLightbox(currentImageIndex)
+    })
+  }
+  
+  // Event listeners del lightbox
+  if (lightboxClose) {
+    lightboxClose.addEventListener('click', closeLightbox)
+  }
+  
+  if (lightboxPrev) {
+    lightboxPrev.addEventListener('click', prevImage)
+  }
+  
+  if (lightboxNext) {
+    lightboxNext.addEventListener('click', nextImage)
+  }
+  
+  // Cerrar lightbox al hacer clic fuera de la imagen
+  if (lightbox) {
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        closeLightbox()
+      }
+    })
+  }
+  
+  // Navegación con teclado
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('hidden')) {
+      if (e.key === 'Escape') closeLightbox()
+      if (e.key === 'ArrowLeft') prevImage()
+      if (e.key === 'ArrowRight') nextImage()
+    }
+  })
+  
+  // Marcar el primer thumbnail como activo
+  if (galeriaThumbs.length > 0) {
+    galeriaThumbs[0].classList.add('border-2', 'border-[#F47920]')
+  }
+
+  // Carrusel de thumbnails functionality
+  const carouselContainer = document.getElementById('carousel-container')
+  const carouselPrev = document.getElementById('carousel-prev')
+  const carouselNext = document.getElementById('carousel-next')
+  let carouselPosition = 0
+  const itemsToShow = 4 // Mostrar 4 thumbnails a la vez
+  const totalItems = galeriaThumbs.length
+  const maxPosition = Math.max(0, totalItems - itemsToShow)
+
+  function updateCarouselButtons() {
+    if (carouselPrev && carouselNext) {
+      carouselPrev.disabled = carouselPosition === 0
+      carouselNext.disabled = carouselPosition >= maxPosition
+    }
+  }
+
+  function moveCarousel(direction) {
+    if (direction === 'prev' && carouselPosition > 0) {
+      carouselPosition--
+    } else if (direction === 'next' && carouselPosition < maxPosition) {
+      carouselPosition++
+    }
+    
+    if (carouselContainer) {
+      const itemWidth = 100 / itemsToShow // 25% por cada item
+      const translateX = -(carouselPosition * itemWidth)
+      carouselContainer.style.transform = `translateX(${translateX}%)`
+    }
+    
+    updateCarouselButtons()
+  }
+
+  if (carouselPrev) {
+    carouselPrev.addEventListener('click', () => moveCarousel('prev'))
+  }
+
+  if (carouselNext) {
+    carouselNext.addEventListener('click', () => moveCarousel('next'))
+  }
+
+  // Inicializar botones del carrusel
+  updateCarouselButtons()
 
   // Add to cart functionality
   const addToCartBtn = document.querySelector('button[data-producto-id]')
