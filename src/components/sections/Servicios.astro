@@ -1,0 +1,76 @@
+---
+const servicios = [
+  {
+    icono: 'M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v10m0 0h10m-10 0a2 2 0 01-2 2H5a2 2 0 01-2-2v-4m12 6a2 2 0 002-2v-4m0 0H9',
+    titulo: 'Instrumentación',
+    descripcion: 'Soluciones completas en medición y control de variables industriales. Sensores, transmisores y analizadores de proceso.',
+  },
+  {
+    icono: 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z',
+    titulo: 'Automatización',
+    descripcion: 'Implementación de sistemas de control y automatización para optimizar sus procesos productivos con tecnología de vanguardia.',
+  },
+  {
+    icono: 'M13 10V3L4 14h7v7l9-11h-7z',
+    titulo: 'Electrónica industrial',
+    descripcion: 'Componentes y equipos electrónicos para aplicaciones industriales exigentes. Fuentes, variadores y sistemas de control.',
+  },
+  {
+    icono: 'M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z',
+    titulo: 'Soporte técnico',
+    descripcion: 'Asesoría, mantención e instalación de equipos. Nuestro equipo técnico especializado respalda cada producto que ofrecemos.',
+  },
+]
+---
+
+<section class="py-32 bg-white">
+  <div class="max-w-[1400px] mx-auto px-8">
+
+    <!-- Header sección — grande y refinado -->
+    <div class="max-w-3xl mb-24">
+      <p class="text-[#F47920] text-sm font-medium uppercase tracking-[0.22em] mb-7">
+        Lo que hacemos
+      </p>
+      <h2 class="text-[#0E2346] font-semibold mb-7" style="font-size: 42px; line-height: 1.08; letter-spacing: -0.025em;">
+        Capacidades técnicas integrales
+      </h2>
+      <p class="text-gray-500 font-light" style="font-size: clamp(1.1rem, 1.4vw, 1.3rem); line-height: 1.7;">
+        Acompañamos cada proyecto desde el diagnóstico hasta la operación continua, con enfoque en la confiabilidad del proceso.
+      </p>
+    </div>
+
+    <!-- Grid servicios -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+      {servicios.map((servicio, i) => (
+        <div class="group border-t border-gray-200 pt-10 transition-all duration-300">
+          <span class="block text-[#F47920] text-sm font-medium tracking-[0.15em] mb-8">
+            {String(i + 1).padStart(2, '0')}
+          </span>
+
+          <div class="w-12 h-12 flex items-center justify-center mb-7 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-[#1B3A6B] group-hover:text-[#F47920] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.25" d={servicio.icono} />
+            </svg>
+          </div>
+
+          <h3 class="text-[#0E2346] font-semibold tracking-tight leading-snug mb-4" style="font-size: 1.5rem; letter-spacing: -0.015em;">
+            {servicio.titulo}
+          </h3>
+
+          <p class="text-gray-500 font-light" style="font-size: 1.05rem; line-height: 1.7;">
+            {servicio.descripcion}
+          </p>
+        </div>
+      ))}
+    </div>
+
+    <!-- CTA -->
+    <div class="mt-24">
+      <a href="/servicios" class="inline-flex items-center gap-3 text-[#0E2346] font-medium text-base tracking-wide hover:gap-4 transition-all border-b border-[#0E2346] pb-2">
+        Ver todos los servicios
+        <span class="text-[#F47920] text-lg">→</span>
+      </a>
+    </div>
+
+  </div>
+</section>

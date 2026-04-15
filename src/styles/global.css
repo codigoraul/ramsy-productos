@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ramsy-orange: #F47920;
+  --color-ramsy-navy: #1B3A6B;
+  --color-ramsy-navy-dark: #0E2346;
+  --color-ramsy-gray: #F5F5F0;
+
+  /* Tipografía unificada — IBM Plex Sans (precisión técnica) */
+  --font-display: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  --font-body: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  --font-sans: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+
+  /* Layout */
+  --max-width-site: 1400px;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-size: 16px; /* base óptima para IBM Plex Sans */
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: 400; /* peso regular para cuerpo de texto */
+  line-height: 1.65;
+  color: #1a1a1a;
+}
+
+/* Escala tipográfica — pesos optimizados para instrumentación técnica */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 600; /* peso semibold para títulos (autoridad técnica) */
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-weight: 600; /* semibold en lugar de bold — más refinado */
+  letter-spacing: -0.03em;
+  font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+  line-height: 1.05;
+}
+
+h2 {
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+
+/* h3/h4 sin tamaño global: se define por componente vía clases de Tailwind */
+
+p {
+  line-height: 1.7;
+}
+
+::selection {
+  background: var(--color-ramsy-orange);
+  color: white;
+}

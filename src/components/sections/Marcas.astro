@@ -1,0 +1,55 @@
+---
+const marcas = [
+  { nombre: 'Siemens', categoria: 'Automatización' },
+  { nombre: 'Endress+Hauser', categoria: 'Instrumentación' },
+  { nombre: 'Schneider Electric', categoria: 'Control' },
+  { nombre: 'ABB', categoria: 'Electrónica' },
+  { nombre: 'Yokogawa', categoria: 'Medición' },
+  { nombre: 'Honeywell', categoria: 'Automatización' },
+  { nombre: 'Phoenix Contact', categoria: 'Conectividad' },
+  { nombre: 'Wago', categoria: 'Control' },
+]
+---
+
+<section class="py-32 bg-[#F5F5F0]">
+  <div class="max-w-[1400px] mx-auto px-8">
+
+    <!-- Header -->
+    <div class="text-center max-w-3xl mx-auto mb-20">
+      <p class="text-[#F47920] text-sm font-medium uppercase tracking-[0.22em] mb-7">
+        Partners
+      </p>
+      <h2 class="text-[#0E2346] font-semibold mb-7" style="font-size: 42px; line-height: 1.08; letter-spacing: -0.025em;">
+        Marcas que representamos
+      </h2>
+      <p class="text-gray-500 font-light" style="font-size: clamp(1.1rem, 1.4vw, 1.3rem); line-height: 1.7;">
+        Trabajamos con los principales fabricantes del mundo en instrumentación y electrónica industrial.
+      </p>
+    </div>
+
+    <!-- Grid marcas -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-gray-200 border border-gray-200">
+      {marcas.map(marca => (
+        <div class="group bg-white hover:bg-white py-14 px-6 flex flex-col items-center justify-center gap-4 transition-colors cursor-default">
+          <div class="w-16 h-16 flex items-center justify-center">
+            <span class="text-[#1B3A6B] group-hover:text-[#F47920] font-semibold tracking-tight transition-colors" style="font-size: 1.75rem; letter-spacing: -0.02em;">
+              {marca.nombre.substring(0, 2)}
+            </span>
+          </div>
+          <p class="text-[#0E2346] font-medium tracking-tight text-center" style="font-size: 1.05rem;">
+            {marca.nombre}
+          </p>
+          <p class="text-gray-400 text-xs font-light tracking-wider uppercase">
+            {marca.categoria}
+          </p>
+        </div>
+      ))}
+    </div>
+
+    <p class="text-center text-base text-gray-500 font-light mt-12">
+      ¿Buscas una marca específica?
+      <a href="/contacto" class="text-[#F47920] hover:underline font-medium ml-1">Consúltanos →</a>
+    </p>
+
+  </div>
+</section>

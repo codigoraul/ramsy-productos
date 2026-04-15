@@ -1,0 +1,401 @@
+---
+export const prerender = false
+
+import Layout from '../../layouts/Layout.astro'
+import Breadcrumb from '../../components/ui/Breadcrumb.astro'
+import { getProductoBySlug, formatearPrecio, getImagenProducto } from '../../lib/woocommerce.js'
+
+const { slug } = Astro.params
+const producto = await getProductoBySlug(slug)
+
+if (!producto) {
+  return Astro.redirect('/productos')
+}
+
+const precio = formatearPrecio(producto.price)
+const imagen = getImagenProducto(producto)
+---
+
+<Layout 
+  title={producto.name} 
+  description={producto.short_description || producto.description}
+>
+  <Breadcrumb 
+    items={[
+      { label: 'Inicio', href: '/' },
+      { label: 'Productos', href: '/productos' },
+      { label: producto.name }
+    ]}
+  />
+
+  <!-- Producto -->
+  <section class="py-16 bg-white">
+    <div class="max-w-[1400px] mx-auto px-10">
+      
+      <!-- Grid: Imagen + Info -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-16">
+        
+        <!-- Imagen -->
+        <div class="bg-[#F5F5F0] p-8 flex items-center justify-center">
+          <img 
+            src={imagen} 
+            alt={producto.name}
+            class="w-full h-auto max-h-[500px] object-contain"
+          />
+        </div>
+
+        <!-- Info del producto -->
+        <div>
+          <p class="text-[#F47920] text-sm font-medium uppercase tracking-[0.22em] mb-4">
+            {producto.categories?.[0]?.name || 'Producto'}
+          </p>
+          
+          <h1 class="text-[#0E2346] font-semibold mb-6" style="font-size: 42px; line-height: 1.08; letter-spacing: -0.025em;">
+            {producto.name}
+          </h1>
+
+          {producto.short_description && (
+            <div class="text-gray-600 font-light leading-[1.7] mb-8" style="font-size: 1.1rem;" set:html={producto.short_description} />
+          )}
+
+          <!-- Precio -->
+          <div class="mb-8">
+            <p class="text-[#0E2346] font-semibold mb-2" style="font-size: 2.5rem; letter-spacing: -0.02em;">
+              {precio}
+            </p>
+            {producto.sku && (
+              <p class="text-gray-500 text-sm font-light">
+                SKU: <span class="font-medium">{producto.sku}</span>
+              </p>
+            )}
+          </div>
+
+          <!-- Stock -->
+          {producto.stock_status === 'instock' ? (
+            <p class="text-green-600 font-medium mb-8 flex items-center gap-2">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+              Disponible en stock
+            </p>
+          ) : (
+            <p class="text-red-600 font-medium mb-8">
+              Sin stock
+            </p>
+          )}
+
+          <!-- Botón añadir al carrito -->
+          <button 
+            class="bg-[#F47920] text-white px-8 py-4 font-medium tracking-wide hover:bg-[#d66a1a] transition-colors w-full lg:w-auto"
+            data-producto-id={producto.id}
+            data-producto-nombre={producto.name}
+            data-producto-precio={producto.price}
+            data-producto-imagen={imagen}
+          >
+            Añadir al carrito
+          </button>
+
+          <!-- Info adicional -->
+          <div class="mt-12 pt-8 border-t border-gray-200 space-y-4">
+            <div class="flex items-start gap-3">
+              <svg class="w-6 h-6 text-[#F47920] flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+              <div>
+                <p class="text-[#0E2346] font-medium mb-1">Garantía de calidad</p>
+                <p class="text-gray-600 font-light text-sm">Productos certificados y garantizados</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <svg class="w-6 h-6 text-[#F47920] flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+              </svg>
+              <div>
+                <p class="text-[#0E2346] font-medium mb-1">Soporte técnico</p>
+                <p class="text-gray-600 font-light text-sm">Asesoría especializada incluida</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="border-t border-gray-200">
+        <div class="flex gap-8 border-b border-gray-200" role="tablist">
+          <button 
+            class="tab-button py-4 px-2 font-medium text-[#0E2346] border-b-2 border-[#F47920] tracking-wide"
+            data-tab="descripcion"
+            role="tab"
+            aria-selected="true"
+          >
+            Descripción
+          </button>
+          <button 
+            class="tab-button py-4 px-2 font-medium text-gray-500 border-b-2 border-transparent hover:text-[#0E2346] tracking-wide"
+            data-tab="especificaciones"
+            role="tab"
+            aria-selected="false"
+          >
+            Especificaciones
+          </button>
+          <button 
+            class="tab-button py-4 px-2 font-medium text-gray-500 border-b-2 border-transparent hover:text-[#0E2346] tracking-wide"
+            data-tab="manuales"
+            role="tab"
+            aria-selected="false"
+          >
+            Manuales y Descargas
+          </button>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="py-12">
+          
+          <!-- Descripción -->
+          <div class="tab-content" data-tab="descripcion">
+            <div class="prose max-w-none">
+              {producto.description ? (
+                <div class="text-gray-600 font-light leading-[1.7]" style="font-size: 1.05rem;" set:html={producto.description} />
+              ) : (
+                <p class="text-gray-500 font-light">No hay descripción disponible.</p>
+              )}
+            </div>
+          </div>
+
+          <!-- Especificaciones -->
+          <div class="tab-content hidden" data-tab="especificaciones">
+            <div class="max-w-4xl">
+              <h3 class="text-[#0E2346] font-semibold mb-6" style="font-size: 1.5rem;">
+                Especificaciones técnicas
+              </h3>
+              
+              {/* Tabla HTML personalizada del campo specs_table */}
+              {producto.specs_table ? (
+                <div class="mb-8 overflow-x-auto">
+                  <div class="specs-table" set:html={producto.specs_table} />
+                </div>
+              ) : (
+                <table class="w-full border border-gray-200">
+                <tbody>
+                  {producto.attributes && producto.attributes.length > 0 ? (
+                    producto.attributes.map((attr) => (
+                      <tr class="border-b border-gray-200">
+                        <td class="py-4 px-6 bg-[#F5F5F0] font-medium text-[#0E2346] w-1/3">
+                          {attr.name}
+                        </td>
+                        <td class="py-4 px-6 text-gray-600 font-light">
+                          {attr.options.join(', ')}
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td class="py-4 px-6 text-gray-500 font-light" colspan="2">
+                        No hay especificaciones disponibles.
+                      </td>
+                    </tr>
+                  )}
+                  
+                  {/* Filas adicionales estáticas */}
+                  {producto.weight && (
+                    <tr class="border-b border-gray-200">
+                      <td class="py-4 px-6 bg-[#F5F5F0] font-medium text-[#0E2346] w-1/3">
+                        Peso
+                      </td>
+                      <td class="py-4 px-6 text-gray-600 font-light">
+                        {producto.weight} kg
+                      </td>
+                    </tr>
+                  )}
+                  
+                  {producto.dimensions && (producto.dimensions.length || producto.dimensions.width || producto.dimensions.height) && (
+                    <tr class="border-b border-gray-200">
+                      <td class="py-4 px-6 bg-[#F5F5F0] font-medium text-[#0E2346] w-1/3">
+                        Dimensiones
+                      </td>
+                      <td class="py-4 px-6 text-gray-600 font-light">
+                        {producto.dimensions.length} × {producto.dimensions.width} × {producto.dimensions.height} cm
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+              )}
+            </div>
+          </div>
+
+          <!-- Manuales y Descargas -->
+          <div class="tab-content hidden" data-tab="manuales">
+            <div class="max-w-4xl">
+              <h3 class="text-[#0E2346] font-semibold mb-6" style="font-size: 1.5rem;">
+                Documentación técnica
+              </h3>
+              
+              <div class="space-y-4">
+                {/* PDF personalizado del campo pdf_url */}
+                {producto.pdf_url && (
+                  <a 
+                    href={producto.pdf_url} 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="flex items-center gap-4 p-6 bg-[#F5F5F0] hover:bg-gray-200 transition-colors group"
+                  >
+                    <svg class="w-8 h-8 text-[#F47920]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                    <div class="flex-1">
+                      <p class="text-[#0E2346] font-medium group-hover:text-[#F47920] transition-colors">
+                        Ficha técnica del producto
+                      </p>
+                      <p class="text-gray-500 text-sm font-light">
+                        Documento PDF
+                      </p>
+                    </div>
+                    <svg class="w-5 h-5 text-gray-400 group-hover:text-[#F47920] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                  </a>
+                )}
+                
+                {/* Archivos descargables de WooCommerce */}
+                {producto.downloads && producto.downloads.length > 0 ? (
+                  producto.downloads.map((download) => (
+                    <a 
+                      href={download.file} 
+                      target="_blank"
+                      class="flex items-center gap-4 p-6 bg-[#F5F5F0] hover:bg-gray-200 transition-colors group"
+                    >
+                      <svg class="w-8 h-8 text-[#F47920]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                      </svg>
+                      <div class="flex-1">
+                        <p class="text-[#0E2346] font-medium group-hover:text-[#F47920] transition-colors">
+                          {download.name}
+                        </p>
+                        <p class="text-gray-500 text-sm font-light">
+                          Hoja técnica PDF
+                        </p>
+                      </div>
+                      <svg class="w-5 h-5 text-gray-400 group-hover:text-[#F47920] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                      </svg>
+                    </a>
+                  ))
+                ) : !producto.pdf_url && (
+                  <div class="p-8 bg-[#F5F5F0] text-center">
+                    <svg class="w-12 h-12 text-gray-400 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                    <p class="text-gray-500 font-light">
+                      No hay documentación disponible para este producto.
+                    </p>
+                    <p class="text-gray-400 text-sm font-light mt-2">
+                      Contáctanos para solicitar información técnica adicional.
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+</Layout>
+
+<script>
+  // Tabs functionality
+  const tabButtons = document.querySelectorAll('.tab-button')
+  const tabContents = document.querySelectorAll('.tab-content')
+
+  tabButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const tabName = button.getAttribute('data-tab')
+      
+      // Reset all buttons
+      tabButtons.forEach(btn => {
+        btn.classList.remove('border-[#F47920]', 'text-[#0E2346]')
+        btn.classList.add('border-transparent', 'text-gray-500')
+        btn.setAttribute('aria-selected', 'false')
+      })
+      
+      // Activate clicked button
+      button.classList.remove('border-transparent', 'text-gray-500')
+      button.classList.add('border-[#F47920]', 'text-[#0E2346]')
+      button.setAttribute('aria-selected', 'true')
+      
+      // Hide all contents
+      tabContents.forEach(content => {
+        content.classList.add('hidden')
+      })
+      
+      // Show selected content
+      if (tabName) {
+        const selectedContent = document.querySelector(`.tab-content[data-tab="${tabName}"]`)
+        if (selectedContent) {
+          selectedContent.classList.remove('hidden')
+        }
+      }
+    })
+  })
+
+  // Add to cart functionality
+  const addToCartBtn = document.querySelector('button[data-producto-id]')
+  
+  if (addToCartBtn) {
+    addToCartBtn.addEventListener('click', () => {
+      const id = addToCartBtn.getAttribute('data-producto-id')
+      const nombre = addToCartBtn.getAttribute('data-producto-nombre')
+      const precio = parseFloat(addToCartBtn.getAttribute('data-producto-precio'))
+      const imagen = addToCartBtn.getAttribute('data-producto-imagen')
+      
+      // Aquí integrarás con tu store de Nanostores
+      console.log('Añadir al carrito:', { id, nombre, precio, imagen })
+      
+      // Feedback visual
+      addToCartBtn.textContent = '✓ Añadido al carrito'
+      addToCartBtn.classList.add('bg-green-600', 'hover:bg-green-700')
+      addToCartBtn.classList.remove('bg-[#F47920]', 'hover:bg-[#d66a1a]')
+      
+      setTimeout(() => {
+        addToCartBtn.textContent = 'Añadir al carrito'
+        addToCartBtn.classList.remove('bg-green-600', 'hover:bg-green-700')
+        addToCartBtn.classList.add('bg-[#F47920]', 'hover:bg-[#d66a1a]')
+      }, 2000)
+    })
+  }
+</script>
+
+<style>
+  /* Estilos para la tabla de especificaciones */
+  .specs-table :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #e5e7eb;
+  }
+  
+  .specs-table :global(th),
+  .specs-table :global(td) {
+    padding: 12px 16px;
+    text-align: left;
+    border: 1px solid #e5e7eb;
+  }
+  
+  .specs-table :global(th) {
+    background-color: #f9fafb;
+    color: #0E2346;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  
+  .specs-table :global(td) {
+    color: #4b5563;
+    font-size: 0.95rem;
+  }
+  
+  .specs-table :global(tr:hover) {
+    background-color: #f9fafb;
+  }
+</style>

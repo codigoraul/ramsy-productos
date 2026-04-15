@@ -1,0 +1,186 @@
+---
+import Layout from '../layouts/Layout.astro'
+import Breadcrumb from '../components/ui/Breadcrumb.astro'
+
+const valores = [
+  {
+    icono: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z',
+    titulo: 'Calidad',
+    descripcion: 'Trabajamos exclusivamente con marcas reconocidas y productos certificados que cumplen estándares internacionales.',
+  },
+  {
+    icono: 'M13 10V3L4 14h7v7l9-11h-7z',
+    titulo: 'Experiencia técnica',
+    descripcion: 'Más de 10 años respaldando proyectos industriales con asesoría especializada y soporte continuo.',
+  },
+  {
+    icono: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z',
+    titulo: 'Compromiso',
+    descripcion: 'Acompañamos cada proyecto desde la especificación hasta la puesta en marcha y mantenimiento.',
+  },
+  {
+    icono: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z',
+    titulo: 'Servicio personalizado',
+    descripcion: 'Cada cliente e industria tiene necesidades únicas. Adaptamos nuestras soluciones a cada proyecto.',
+  },
+]
+
+const sectores = [
+  'Minería',
+  'Energía',
+  'Agua y saneamiento',
+  'Manufactura',
+  'Alimentos y bebidas',
+  'Química y petroquímica',
+]
+---
+
+<Layout 
+  title="Nosotros" 
+  description="Especialistas en instrumentación y electrónica industrial con más de 10 años de experiencia en Chile."
+>
+  <Breadcrumb 
+    items={[
+      { label: 'Inicio', href: '/' },
+      { label: 'Nosotros' }
+    ]}
+    title="Nosotros"
+    backgroundImage="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=1600&q=80"
+  />
+
+  <!-- Contenido intro en 2 columnas -->
+  <section class="bg-white py-24">
+    <div class="max-w-[1400px] mx-auto px-10">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+        <!-- Columna izquierda: texto -->
+        <div>
+          <p class="text-[#F47920] text-sm font-medium uppercase tracking-[0.22em] mb-7">
+            Quiénes somos
+          </p>
+          <h2 class="text-[#0E2346] font-semibold mb-8" style="font-size: 42px; line-height: 1.08; letter-spacing: -0.025em;">
+            Especialistas en instrumentación y electrónica industrial
+          </h2>
+          <p class="text-gray-600 font-light leading-[1.7] mb-6" style="font-size: 1.15rem;">
+            En <strong class="font-medium text-[#0E2346]">Ramsy SPA</strong> nos dedicamos a proveer soluciones técnicas de alta precisión para la industria chilena. Con más de 10 años de experiencia, hemos consolidado nuestra posición como partner confiable en proyectos de instrumentación, automatización y electrónica industrial.
+          </p>
+          <p class="text-gray-600 font-light leading-[1.7] mb-10" style="font-size: 1.15rem;">
+            Nuestro enfoque combina productos de calidad internacional con conocimiento técnico local, garantizando soluciones efectivas y soporte continuo para cada proyecto.
+          </p>
+          <a href="/contacto" class="inline-flex items-center gap-2.5 text-[#0E2346] font-medium text-base tracking-wide hover:gap-4 transition-all border-b-2 border-[#F47920] pb-2">
+            Conversemos sobre tu proyecto
+            <span class="text-[#F47920] text-lg">→</span>
+          </a>
+        </div>
+
+        <!-- Columna derecha: imagen con marco decorativo -->
+        <div class="relative">
+          <!-- Marco naranja decorativo detrás -->
+          <div class="absolute -top-6 -right-6 w-full h-full border-2 border-[#F47920] hidden lg:block"></div>
+
+          <!-- Imagen principal -->
+          <div class="relative overflow-hidden bg-[#F5F5F0]" style="aspect-ratio: 4/5;">
+            <img
+              src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=900&q=80"
+              alt="Equipo técnico Ramsy SPA"
+              class="w-full h-full object-cover"
+            />
+          </div>
+
+          <!-- Badge inferior -->
+          <div class="absolute bottom-6 left-6 bg-[#F47920] text-white px-8 py-5 max-w-[240px]">
+            <p class="font-semibold leading-tight" style="font-size: 1.75rem; letter-spacing: -0.02em;">+10 años</p>
+            <p class="font-light text-sm mt-1 tracking-wide">respaldando la industria chilena</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Valores -->
+  <section class="py-32 bg-[#F5F5F0]">
+    <div class="max-w-[1400px] mx-auto px-10">
+      
+      <div class="max-w-3xl mb-20">
+        <p class="text-[#F47920] text-sm font-medium uppercase tracking-[0.22em] mb-7">
+          Nuestros valores
+        </p>
+        <h2 class="text-[#0E2346] font-semibold mb-7" style="font-size: 42px; line-height: 1.08; letter-spacing: -0.025em;">
+          Lo que nos define
+        </h2>
+        <p class="text-gray-500 font-light" style="font-size: clamp(1.1rem, 1.4vw, 1.25rem); line-height: 1.7;">
+          Principios que guían nuestro trabajo diario y la relación con nuestros clientes.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+        {valores.map((valor) => (
+          <div class="bg-white border-t-2 border-[#F47920] p-10 group hover:shadow-lg transition-shadow">
+            <div class="w-14 h-14 flex items-center justify-center mb-6">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-[#F47920]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.25" d={valor.icono} />
+              </svg>
+            </div>
+            <h3 class="text-[#0E2346] font-semibold tracking-tight leading-snug mb-4" style="font-size: 1.65rem; letter-spacing: -0.015em;">
+              {valor.titulo}
+            </h3>
+            <p class="text-gray-600 font-light leading-[1.7]" style="font-size: 1.05rem;">
+              {valor.descripcion}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Sectores que atendemos -->
+  <section class="py-32 bg-white">
+    <div class="max-w-[1400px] mx-auto px-10">
+      
+      <div class="max-w-3xl mb-20">
+        <p class="text-[#F47920] text-sm font-medium uppercase tracking-[0.22em] mb-7">
+          Industrias
+        </p>
+        <h2 class="text-[#0E2346] font-semibold mb-7" style="font-size: 42px; line-height: 1.08; letter-spacing: -0.025em;">
+          Sectores que atendemos
+        </h2>
+        <p class="text-gray-500 font-light" style="font-size: clamp(1.1rem, 1.4vw, 1.25rem); line-height: 1.7;">
+          Experiencia comprobada en múltiples sectores industriales con requerimientos técnicos exigentes.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+        {sectores.map((sector) => (
+          <div class="border border-gray-200 hover:border-[#F47920] p-8 text-center transition-all group hover:shadow-md">
+            <p class="text-[#0E2346] group-hover:text-[#F47920] font-medium tracking-tight transition-colors" style="font-size: 1.15rem;">
+              {sector}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Compromiso / CTA -->
+  <section class="py-32 bg-[#0E2346] text-white">
+    <div class="max-w-5xl mx-auto px-10 text-center">
+      <h2 class="text-white font-semibold mb-8" style="font-size: 42px; line-height: 1.1; letter-spacing: -0.025em;">
+        Trabajemos juntos en tu próximo proyecto
+      </h2>
+      <p class="text-white/75 font-light mb-12 max-w-3xl mx-auto" style="font-size: 1.15rem; line-height: 1.7;">
+        Nuestro equipo técnico está listo para asesorarte en la selección de instrumentación y componentes para tu aplicación industrial.
+      </p>
+      <div class="flex gap-6 justify-center flex-wrap">
+        <a href="/contacto" class="bg-[#F47920] hover:bg-[#d96a10] text-white font-medium text-base tracking-wide px-10 py-5 transition-colors rounded-[2px]">
+          Solicitar cotización
+        </a>
+        <a href="/productos" class="inline-flex items-center gap-2.5 text-white font-normal text-base tracking-wide px-3 py-5 hover:gap-4 transition-all">
+          Ver catálogo de productos
+          <span class="text-[#F47920] text-lg">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</Layout>

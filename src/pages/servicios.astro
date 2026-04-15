@@ -1,0 +1,145 @@
+---
+import Layout from '../layouts/Layout.astro'
+import Breadcrumb from '../components/ui/Breadcrumb.astro'
+
+const servicios = [
+  {
+    slug: 'instrumentacion',
+    titulo: 'Instrumentación industrial',
+    descripcion: 'Selección, suministro e integración de sensores, transmisores y sistemas de medición para variables críticas de proceso.',
+    imagen: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    slug: 'automatizacion',
+    titulo: 'Automatización y control',
+    descripcion: 'Diseño e implementación de sistemas de control basados en PLC, HMI y SCADA para optimizar procesos productivos.',
+    imagen: 'https://images.unsplash.com/photo-1565608087341-404b25492fee?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    slug: 'electronica',
+    titulo: 'Electrónica industrial',
+    descripcion: 'Tableros eléctricos, variadores de frecuencia, fuentes de poder y componentes electrónicos para aplicaciones exigentes.',
+    imagen: 'https://images.unsplash.com/photo-1580982327559-c1202864eb05?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    slug: 'calibracion',
+    titulo: 'Calibración trazable',
+    descripcion: 'Servicios de calibración con trazabilidad metrológica para instrumentos de presión, temperatura, flujo y nivel.',
+    imagen: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    slug: 'mantenimiento',
+    titulo: 'Mantenimiento especializado',
+    descripcion: 'Mantención preventiva y correctiva de equipos de instrumentación, sistemas de control y tableros eléctricos.',
+    imagen: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    slug: 'ingenieria',
+    titulo: 'Ingeniería y asesoría',
+    descripcion: 'Diagnóstico técnico, ingeniería de detalle y desarrollo de proyectos de automatización a medida para tu industria.',
+    imagen: 'https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&w=900&q=80',
+  },
+]
+---
+
+<Layout
+  title="Servicios"
+  description="Servicios técnicos en instrumentación, automatización, electrónica industrial, calibración y mantenimiento."
+>
+  <Breadcrumb
+    items={[
+      { label: 'Inicio', href: '/' },
+      { label: 'Servicios' }
+    ]}
+    title="Servicios"
+    backgroundImage="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=1600&q=80"
+  />
+
+  <!-- Intro -->
+  <section class="bg-white py-24">
+    <div class="max-w-[1400px] mx-auto px-10">
+      <div class="max-w-3xl">
+        <p class="text-[#F47920] text-sm font-medium uppercase tracking-[0.22em] mb-7">
+          Lo que hacemos
+        </p>
+        <h2 class="text-[#0E2346] font-semibold mb-7" style="font-size: 42px; line-height: 1.08; letter-spacing: -0.025em;">
+          Servicios técnicos integrales
+        </h2>
+        <p class="text-gray-500 font-light" style="font-size: clamp(1.1rem, 1.4vw, 1.25rem); line-height: 1.7;">
+          Acompañamos cada proyecto desde el diagnóstico inicial hasta la puesta en marcha y el soporte continuo,
+          con estándares corporativos y enfoque en la confiabilidad del proceso.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Grid servicios 3 columnas -->
+  <section class="bg-[#F5F5F0] py-24">
+    <div class="max-w-[1400px] mx-auto px-10">
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        {servicios.map((servicio) => (
+          <article class="bg-white group flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl">
+
+            <!-- Imagen -->
+            <div class="relative overflow-hidden bg-gray-100" style="aspect-ratio: 4/3;">
+              <img
+                src={servicio.imagen}
+                alt={servicio.titulo}
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <!-- Overlay naranja sutil al hover -->
+              <div class="absolute inset-0 bg-[#F47920]/0 group-hover:bg-[#F47920]/10 transition-colors duration-300"></div>
+            </div>
+
+            <!-- Contenido -->
+            <div class="p-8 flex flex-col flex-grow">
+              <h3 class="text-[#0E2346] font-semibold tracking-tight leading-snug mb-4" style="font-size: 1.5rem; letter-spacing: -0.015em;">
+                {servicio.titulo}
+              </h3>
+
+              <p class="text-gray-500 font-light leading-[1.7] mb-8 flex-grow" style="font-size: 1rem;">
+                {servicio.descripcion}
+              </p>
+
+              <a
+                href={`/servicios/${servicio.slug}`}
+                class="inline-flex items-center gap-2 text-[#0E2346] group-hover:text-[#F47920] font-medium text-sm tracking-wide transition-all self-start"
+              >
+                Leer más
+                <span class="text-[#F47920] transition-transform group-hover:translate-x-1">→</span>
+              </a>
+            </div>
+
+          </article>
+        ))}
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA final -->
+  <section class="py-28 bg-[#0E2346] text-white">
+    <div class="max-w-5xl mx-auto px-10 text-center">
+      <p class="text-[#F47920] text-sm font-medium uppercase tracking-[0.22em] mb-7">
+        ¿Necesitas algo específico?
+      </p>
+      <h2 class="text-white font-semibold mb-8" style="font-size: 42px; line-height: 1.1; letter-spacing: -0.025em;">
+        Conversemos sobre tu proyecto
+      </h2>
+      <p class="text-white/75 font-light mb-12 max-w-2xl mx-auto" style="font-size: 1.15rem; line-height: 1.7;">
+        Nuestro equipo técnico está disponible para analizar tus requerimientos y proponer la mejor solución.
+      </p>
+      <div class="flex gap-6 justify-center flex-wrap">
+        <a href="/contacto" class="bg-[#F47920] hover:bg-[#d96a10] text-white font-medium text-base tracking-wide px-10 py-5 transition-colors rounded-[2px]">
+          Solicitar cotización
+        </a>
+        <a href="/productos" class="inline-flex items-center gap-2.5 text-white font-normal text-base tracking-wide px-3 py-5 hover:gap-4 transition-all">
+          Ver catálogo de productos
+          <span class="text-[#F47920] text-lg">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</Layout>

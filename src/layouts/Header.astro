@@ -1,0 +1,72 @@
+---
+import ContadorCarrito from '../ui/ContadorCarrito.jsx'
+---
+
+<header class="sticky top-0 z-50 bg-white shadow-sm">
+  <!-- Top bar -->
+  <div class="bg-[#0E2346] text-gray-400 text-xs py-2 px-6 flex justify-between items-center">
+    <span>Lun - Vie 09:00 - 18:00</span>
+    <span>contacto@ramsy.cl &nbsp;|&nbsp; +56 9 XXXX XXXX</span>
+  </div>
+
+  <!-- Nav principal -->
+  <nav class="border-b-4 border-[#F47920] px-6 flex items-stretch">
+
+    <!-- Logo -->
+    <a href="/" class="flex items-center gap-3 py-3 mr-8 flex-shrink-0">
+      <span class="font-display text-4xl font-black text-[#0E2346] tracking-tight leading-none">
+        R<span class="text-[#F47920]">A</span>MSY
+      </span>
+      <span class="text-[9px] uppercase tracking-widest text-gray-400 border-l-2 border-[#F47920] pl-2 leading-tight max-w-[100px]">
+        Instrumentación y electrónica industrial
+      </span>
+    </a>
+
+    <!-- Links -->
+    <ul class="flex items-stretch list-none m-0 p-0 flex-1">
+      <li>
+        <a href="/" class="flex items-center px-4 h-full text-xs font-semibold uppercase tracking-wider text-[#0E2346] hover:bg-[#F47920] hover:text-white transition-colors">
+          Inicio
+        </a>
+      </li>
+      <li>
+        <a href="/nosotros" class="flex items-center px-4 h-full text-xs font-semibold uppercase tracking-wider text-[#0E2346] hover:bg-[#F47920] hover:text-white transition-colors">
+          Nosotros
+        </a>
+      </li>
+      <li>
+        <a href="/servicios" class="flex items-center px-4 h-full text-xs font-semibold uppercase tracking-wider text-[#0E2346] hover:bg-[#F47920] hover:text-white transition-colors">
+          Servicios
+        </a>
+      </li>
+      <li class="relative group">
+        <a href="/productos" class="flex items-center gap-1 px-4 h-full text-xs font-semibold uppercase tracking-wider text-[#0E2346] hover:bg-[#F47920] hover:text-white transition-colors">
+          Productos <span class="text-[9px]">▼</span>
+        </a>
+        <!-- Dropdown -->
+        <div class="hidden group-hover:block absolute top-full left-0 bg-white shadow-lg border-t-2 border-[#F47920] min-w-[200px] z-50">
+          <a href="/productos?cat=instrumentacion" class="block px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 hover:text-[#1B3A6B] hover:pl-5 transition-all">
+            Instrumentación
+          </a>
+          <a href="/productos?cat=automatizacion" class="block px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 hover:text-[#1B3A6B] hover:pl-5 transition-all">
+            Automatización
+          </a>
+          <a href="/productos?cat=electronica" class="block px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 hover:text-[#1B3A6B] hover:pl-5 transition-all">
+            Electrónica Industrial
+          </a>
+        </div>
+      </li>
+      <li>
+        <a href="/contacto" class="flex items-center px-4 h-full text-xs font-semibold uppercase tracking-wider text-[#0E2346] hover:bg-[#F47920] hover:text-white transition-colors">
+          Contacto
+        </a>
+      </li>
+    </ul>
+
+    <!-- Carrito -->
+    <div class="flex items-center ml-auto pl-4">
+      <ContadorCarrito client:load />
+    </div>
+
+  </nav>
+</header>
