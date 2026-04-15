@@ -124,9 +124,16 @@ const imagen = getImagenProducto(producto)
             {producto.categories?.[0]?.name || 'Producto'}
           </p>
           
-          <h1 class="text-[#0E2346] font-semibold mb-6" style="font-size: 34px; line-height: 1.08; letter-spacing: -0.025em;">
+          <h1 class="text-[#0E2346] font-semibold mb-3" style="font-size: 34px; line-height: 1.08; letter-spacing: -0.025em;">
             {producto.name}
           </h1>
+
+          {/* SKU */}
+          {producto.sku && (
+            <p class="text-gray-500 text-sm font-light mb-6">
+              SKU: <span class="font-medium">{producto.sku}</span>
+            </p>
+          )}
 
           {producto.short_description && (
             <div class="text-gray-600 font-light leading-[1.7] mb-8" style="font-size: 1.1rem;" set:html={producto.short_description} />
@@ -134,14 +141,9 @@ const imagen = getImagenProducto(producto)
 
           <!-- Precio -->
           <div class="mb-8">
-            <p class="text-[#0E2346] font-semibold mb-2" style="font-size: 1.8rem; letter-spacing: -0.02em;">
+            <p class="text-[#0E2346] font-semibold" style="font-size: 1.8rem; letter-spacing: -0.02em;">
               {precio}
             </p>
-            {producto.sku && (
-              <p class="text-gray-500 text-sm font-light">
-                SKU: <span class="font-medium">{producto.sku}</span>
-              </p>
-            )}
           </div>
 
           <!-- Stock -->
@@ -160,11 +162,14 @@ const imagen = getImagenProducto(producto)
 
           <!-- Botón añadir al carrito -->
           <button 
-            class="bg-[#F47920] text-white px-8 py-4 font-medium tracking-wide hover:bg-[#d66a1a] transition-colors w-full lg:w-auto"
+            id="add-to-cart-btn"
+            class="bg-[#F47920] text-white px-8 py-4 font-medium tracking-wide hover:bg-[#d66a1a] transition-colors w-full lg:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
             data-producto-id={producto.id}
             data-producto-nombre={producto.name}
             data-producto-precio={producto.price}
             data-producto-imagen={imagen}
+            data-producto-slug={producto.slug}
+            data-producto-sku={producto.sku}
           >
             Añadir al carrito
           </button>
@@ -579,27 +584,51 @@ const imagen = getImagenProducto(producto)
   updateCarouselButtons()
 
   // Add to cart functionality
-  const addToCartBtn = document.querySelector('button[data-producto-id]')
+  const addToCartBtn = document.getElementById('add-to-cart-btn')
   
   if (addToCartBtn) {
     addToCartBtn.addEventListener('click', () => {
       const id = addToCartBtn.getAttribute('data-producto-id')
       const nombre = addToCartBtn.getAttribute('data-producto-nombre')
-      const precio = parseFloat(addToCartBtn.getAttribute('data-producto-precio'))
+      const precio = parseFloat(addToCartBtn.getAttribute('data-producto-precio') || '0')
       const imagen = addToCartBtn.getAttribute('data-producto-imagen')
+      const slug = addToCartBtn.getAttribute('data-producto-slug')
+      const sku = addToCartBtn.getAttribute('data-producto-sku')
       
-      // Aquí integrarás con tu store de Nanostores
-      console.log('Añadir al carrito:', { id, nombre, precio, imagen })
+      // Agregar al carrito usando localStorage
+      const cart = JSON.parse(localStorage.getItem('ramsy_cart') || '[]')
+      const existingItem = cart.find(item => item.id === id)
+      
+      if (existingItem) {
+        existingItem.quantity += 1
+      } else {
+        cart.push({
+          id,
+          name: nombre,
+          price: precio,
+          image: imagen,
+          slug,
+          sku,
+          quantity: 1
+        })
+      }
+      
+      localStorage.setItem('ramsy_cart', JSON.stringify(cart))
+      
+      // Disparar evento para actualizar el contador del carrito
+      window.dispatchEvent(new CustomEvent('cartUpdated', { detail: cart }))
       
       // Feedback visual
       addToCartBtn.textContent = '✓ Añadido al carrito'
       addToCartBtn.classList.add('bg-green-600', 'hover:bg-green-700')
       addToCartBtn.classList.remove('bg-[#F47920]', 'hover:bg-[#d66a1a]')
+      addToCartBtn.disabled = true
       
       setTimeout(() => {
         addToCartBtn.textContent = 'Añadir al carrito'
         addToCartBtn.classList.remove('bg-green-600', 'hover:bg-green-700')
         addToCartBtn.classList.add('bg-[#F47920]', 'hover:bg-[#d66a1a]')
+        addToCartBtn.disabled = false
       }, 2000)
     })
   }

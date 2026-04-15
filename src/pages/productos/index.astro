@@ -94,14 +94,9 @@ const categorias = await getCategorias()
                     </a>
                   </h3>
 
-                  {/* Descripción corta */}
-                  {producto.short_description && (
-                    <div class="text-gray-600 font-light text-sm leading-relaxed mb-4 line-clamp-2" set:html={producto.short_description} />
-                  )}
-
                   {/* SKU */}
                   {producto.sku && (
-                    <p class="text-gray-400 text-xs font-light mb-4">
+                    <p class="text-gray-500 text-sm font-light mb-4">
                       SKU: {producto.sku}
                     </p>
                   )}
