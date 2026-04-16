@@ -45,7 +45,7 @@ h1 {
 }
 
 h2 {
-  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-size: 34px;
   letter-spacing: -0.025em;
   line-height: 1.1;
 }

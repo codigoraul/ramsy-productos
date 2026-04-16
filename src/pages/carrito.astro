@@ -121,7 +121,7 @@ import Breadcrumb from '../components/ui/Breadcrumb.astro'
             </div>
             
             <button id="checkout-btn" class="block w-full bg-[#F47920] text-white text-center px-6 py-4 font-medium hover:bg-[#d66a1a] transition-colors rounded mb-3">
-              Pagar con WebPay Plus
+              Ir a Pagar
             </button>
             
             <a href="/contacto" class="block w-full bg-gray-200 text-gray-700 text-center px-6 py-3 font-medium hover:bg-gray-300 transition-colors rounded text-sm">
@@ -149,6 +149,58 @@ import Breadcrumb from '../components/ui/Breadcrumb.astro'
     document.querySelectorAll('.remove-item').forEach(btn => {
       btn.addEventListener('click', () => removeItem(btn.dataset.id))
     })
+
+    // Event listener para el botón de checkout
+    const checkoutBtn = document.getElementById('checkout-btn')
+    if (checkoutBtn) {
+      checkoutBtn.addEventListener('click', async () => {
+        const cart = JSON.parse(localStorage.getItem('ramsy_cart') || '[]')
+        
+        if (cart.length === 0) {
+          alert('Tu carrito está vacío')
+          return
+        }
+
+        // Mostrar loading
+        checkoutBtn.disabled = true
+        checkoutBtn.textContent = 'Procesando...'
+
+        try {
+          const wpUrl = 'http://localhost:10033'
+          
+          // Enviar productos al endpoint personalizado de WordPress
+          const response = await fetch(`${wpUrl}/wp-json/ramsy/v1/add-to-cart`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(cart)
+          })
+          
+          if (!response.ok) {
+            throw new Error('Error al agregar productos al carrito')
+          }
+          
+          const data = await response.json()
+          
+          if (data.success && data.redirect_url) {
+            // NO limpiar el carrito - mantener persistencia hasta que se complete el pago
+            // El usuario puede volver si no completa la compra
+            
+            // Redirigir a la página intermedia que agregará los productos
+            window.location.href = data.redirect_url
+          } else {
+            throw new Error('No se pudieron agregar los productos')
+          }
+          
+        } catch (error) {
+          console.error('Error al procesar el checkout:', error)
+          alert('Hubo un error al procesar tu pedido. Por favor, intenta nuevamente.')
+          checkoutBtn.disabled = false
+          checkoutBtn.textContent = 'Ir a Pagar'
+        }
+      })
+    }
   }
 
   function updateQuantity(productId, change) {
@@ -180,46 +232,4 @@ import Breadcrumb from '../components/ui/Breadcrumb.astro'
 
   // Escuchar cambios
   window.addEventListener('cartUpdated', loadCart)
-
-  // Manejar el botón de checkout
-  function handleCheckout() {
-    const checkoutBtn = document.getElementById('checkout-btn')
-    
-    if (checkoutBtn) {
-      checkoutBtn.addEventListener('click', async () => {
-        const cart = JSON.parse(localStorage.getItem('ramsy_cart') || '[]')
-        
-        if (cart.length === 0) {
-          alert('Tu carrito está vacío')
-          return
-        }
-
-        // Mostrar loading
-        checkoutBtn.disabled = true
-        checkoutBtn.textContent = 'Procesando...'
-
-        try {
-          // Opción 1: Redirigir directamente al checkout de WooCommerce
-          // Construir URL con los productos
-          const wpUrl = import.meta.env.WP_URL || 'http://localhost:10033'
-          
-          // Agregar productos al carrito de WooCommerce vía URL
-          const productIds = cart.map(item => `add-to-cart=${item.id}`).join('&')
-          const quantities = cart.map((item, index) => `quantity[${index}]=${item.quantity}`).join('&')
-          
-          // Redirigir al checkout de WooCommerce
-          window.location.href = `${wpUrl}/checkout/?${productIds}&${quantities}`
-          
-        } catch (error) {
-          console.error('Error al procesar el checkout:', error)
-          alert('Hubo un error al procesar tu pedido. Por favor, intenta nuevamente.')
-          checkoutBtn.disabled = false
-          checkoutBtn.textContent = 'Pagar con WebPay Plus'
-        }
-      })
-    }
-  }
-
-  // Llamar después de cargar el carrito
-  setTimeout(handleCheckout, 100)
 </script>

@@ -1,0 +1,70 @@
+---
+import { getCategorias } from '../../lib/woocommerce.js'
+
+// Obtener todas las categorías con productos
+const categorias = await getCategorias()
+---
+
+<section class="py-20 bg-gray-50">
+  <div class="max-w-[1200px] mx-auto px-8">
+    
+    <!-- Encabezado -->
+    <div class="text-center mb-16">
+      <p class="text-[#F47920] text-xs font-medium uppercase tracking-[0.2em] mb-4">
+        Explora por categoría
+      </p>
+      <h2 class="text-[#0E2346] font-semibold mb-4">
+        Categorías
+      </h2>
+      <p class="text-gray-600 font-light max-w-2xl mx-auto" style="font-size: 1.1rem; line-height: 1.7;">
+        Encuentra los productos que necesitas organizados por categoría
+      </p>
+    </div>
+
+    <!-- Grid de categorías -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {categorias.map((categoria) => {
+        // Obtener imagen de la categoría (si existe)
+        const imagen = categoria.image?.src || '/images/placeholder-category.jpg'
+        
+        return (
+          <a 
+            href={`/productos?categoria=${categoria.slug}`}
+            class="group bg-white hover:bg-[#0E2346] transition-all duration-300 overflow-hidden hover:shadow-xl"
+          >
+            {/* Imagen de categoría */}
+            <div class="aspect-square bg-[#F5F5F0] overflow-hidden">
+              <img 
+                src={imagen} 
+                alt={categoria.name}
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+              />
+            </div>
+            
+            {/* Info */}
+            <div class="p-6 text-center">
+              {/* Nombre de categoría */}
+              <h3 class="text-[#0E2346] group-hover:text-white font-semibold mb-2 transition-colors" style="font-size: 1.1rem; line-height: 1.3;">
+                {categoria.name}
+              </h3>
+              
+              {/* Contador de productos */}
+              <p class="text-gray-500 group-hover:text-white/70 text-sm transition-colors">
+                {categoria.count} {categoria.count === 1 ? 'producto' : 'productos'}
+              </p>
+              
+              {/* Flecha */}
+              <div class="mt-4 flex items-center justify-center gap-2 text-[#F47920] group-hover:text-white transition-colors">
+                <span class="text-sm font-medium">Ver productos</span>
+                <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+              </div>
+            </div>
+          </a>
+        )
+      })}
+    </div>
+
+  </div>
+</section>

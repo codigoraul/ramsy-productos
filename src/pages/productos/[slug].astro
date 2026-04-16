@@ -33,7 +33,7 @@ const imagen = getImagenProducto(producto)
     <div class="max-w-[1200px] mx-auto px-10">
       
       <!-- Grid: Imagen + Info -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-16">
+      <div class="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-16 mb-16">
         
         <!-- Galería de imágenes -->
         <div>
@@ -635,6 +635,15 @@ const imagen = getImagenProducto(producto)
 </script>
 
 <style>
+  /* Estilos para h2 en la descripción */
+  .tab-content[data-tab="descripcion"] :global(h2) {
+    font-size: 32px !important;
+    color: #0E2346;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    margin-top: 1.5rem;
+  }
+
   /* Estilos para la tabla de especificaciones */
   .specs-table :global(table) {
     width: 100%;

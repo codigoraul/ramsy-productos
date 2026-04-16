@@ -1,6 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import Hero from '../components/sections/Hero.astro'
+import ProductosDestacados from '../components/sections/ProductosDestacados.astro'
+import Categorias from '../components/sections/Categorias.astro'
 import Servicios from '../components/sections/Servicios.astro'
 import Marcas from '../components/sections/Marcas.astro'
 import CarritoDrawer from '../components/ui/CarritoDrawer.jsx'
@@ -9,6 +11,8 @@ import CarritoDrawer from '../components/ui/CarritoDrawer.jsx'
 <Layout title="Inicio">
   <CarritoDrawer client:load />
   <Hero />
+  <ProductosDestacados />
+  <Categorias />
   <Servicios />
   <Marcas />
 </Layout>

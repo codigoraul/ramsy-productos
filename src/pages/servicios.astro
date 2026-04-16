@@ -4,40 +4,28 @@ import Breadcrumb from '../components/ui/Breadcrumb.astro'
 
 const servicios = [
   {
-    slug: 'instrumentacion',
-    titulo: 'Instrumentación industrial',
-    descripcion: 'Selección, suministro e integración de sensores, transmisores y sistemas de medición para variables críticas de proceso.',
+    slug: 'servicios-e-instalaciones',
+    titulo: 'Servicios e instalaciones',
+    descripcion: 'Diseño y armado de tableros eléctricos. Armado de cables automotriz y de instrumentación y control.',
     imagen: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=900&q=80',
   },
   {
-    slug: 'automatizacion',
-    titulo: 'Automatización y control',
-    descripcion: 'Diseño e implementación de sistemas de control basados en PLC, HMI y SCADA para optimizar procesos productivos.',
+    slug: 'tableros-de-faena',
+    titulo: 'Tableros de faena',
+    descripcion: 'Tableros de faena metálica y tableros de faena externos para operaciones industriales exigentes.',
     imagen: 'https://images.unsplash.com/photo-1565608087341-404b25492fee?auto=format&fit=crop&w=900&q=80',
   },
   {
-    slug: 'electronica',
-    titulo: 'Electrónica industrial',
-    descripcion: 'Tableros eléctricos, variadores de frecuencia, fuentes de poder y componentes electrónicos para aplicaciones exigentes.',
+    slug: 'tableros-neumaticos',
+    titulo: 'Tableros neumáticos',
+    descripcion: 'Diseño, armado e instalación de tableros electroneumáticos para sistemas de control industrial.',
     imagen: 'https://images.unsplash.com/photo-1580982327559-c1202864eb05?auto=format&fit=crop&w=900&q=80',
   },
   {
-    slug: 'calibracion',
-    titulo: 'Calibración trazable',
-    descripcion: 'Servicios de calibración con trazabilidad metrológica para instrumentos de presión, temperatura, flujo y nivel.',
+    slug: 'armado-de-cables',
+    titulo: 'Armado de cables',
+    descripcion: 'Armado de cables automotriz para maquinaria. Armado de cables de instrumentación y señales.',
     imagen: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=900&q=80',
-  },
-  {
-    slug: 'mantenimiento',
-    titulo: 'Mantenimiento especializado',
-    descripcion: 'Mantención preventiva y correctiva de equipos de instrumentación, sistemas de control y tableros eléctricos.',
-    imagen: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=80',
-  },
-  {
-    slug: 'ingenieria',
-    titulo: 'Ingeniería y asesoría',
-    descripcion: 'Diagnóstico técnico, ingeniería de detalle y desarrollo de proyectos de automatización a medida para tu industria.',
-    imagen: 'https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&w=900&q=80',
   },
 ]
 ---
@@ -57,7 +45,7 @@ const servicios = [
 
   <!-- Intro -->
   <section class="bg-white py-24">
-    <div class="max-w-[1400px] mx-auto px-10">
+    <div class="max-w-[1200px] mx-auto px-10">
       <div class="max-w-3xl">
         <p class="text-[#F47920] text-sm font-medium uppercase tracking-[0.22em] mb-7">
           Lo que hacemos
@@ -75,9 +63,9 @@ const servicios = [
 
   <!-- Grid servicios 3 columnas -->
   <section class="bg-[#F5F5F0] py-24">
-    <div class="max-w-[1400px] mx-auto px-10">
+    <div class="max-w-[1200px] mx-auto px-10">
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {servicios.map((servicio) => (
           <article class="bg-white group flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl">
 

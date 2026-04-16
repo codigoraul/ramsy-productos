@@ -1,18 +1,19 @@
 ---
 import ContadorCarrito from '../ui/ContadorCarrito.jsx'
+import { BotonBuscador } from '../ui/BuscadorModal.jsx'
 ---
 
 <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100">
   <!-- Top bar -->
   <div class="bg-[#F47920] text-white text-sm font-light py-3">
-    <div class="max-w-[1400px] mx-auto px-10 flex justify-between items-center tracking-wide">
+    <div class="max-w-[1200px] mx-auto px-10 flex justify-between items-center tracking-wide">
       <span>Lun – Vie · 09:00 – 18:00</span>
       <span>contacto@ramsy.cl &nbsp;·&nbsp; +56 9 XXXX XXXX</span>
     </div>
   </div>
 
   <!-- Nav principal -->
-  <nav class="max-w-[1400px] mx-auto px-10 flex items-center gap-12 h-24">
+  <nav class="max-w-[1200px] mx-auto px-10 flex items-center gap-12 h-24">
 
     <!-- Logo -->
     <a href="/" class="flex items-center gap-4 flex-shrink-0">
@@ -72,7 +73,8 @@ import ContadorCarrito from '../ui/ContadorCarrito.jsx'
     </ul>
 
     <!-- CTA -->
-    <div class="flex items-center gap-6 pl-5 border-l border-gray-100">
+    <div class="flex items-center gap-4 pl-5 border-l border-gray-100">
+      <BotonBuscador client:load />
       <a href="/contacto" class="hidden md:inline-block bg-[#F47920] hover:bg-[#d96a10] text-white text-[14px] font-medium tracking-wide px-6 py-3 transition-colors rounded-[2px]">
         Cotizar
       </a>
