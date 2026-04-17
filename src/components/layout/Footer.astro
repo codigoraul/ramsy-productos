@@ -41,11 +41,11 @@ const base = import.meta.env.BASE_URL
       </h3>
       <ul class="flex flex-col gap-3">
         {[
-          { label: 'Instrumentación', href: `${base}/productos?cat=instrumentacion` },
-          { label: 'Automatización', href: `${base}/productos?cat=automatizacion` },
-          { label: 'Electrónica industrial', href: `${base}/productos?cat=electronica` },
-          { label: 'Sensores', href: `${base}/productos?cat=sensores` },
-          { label: 'Control de procesos', href: `${base}/productos?cat=control` },
+          { label: 'Instrumentación', href: `${base}productos?cat=instrumentacion` },
+          { label: 'Automatización', href: `${base}productos?cat=automatizacion` },
+          { label: 'Electrónica industrial', href: `${base}productos?cat=electronica` },
+          { label: 'Sensores', href: `${base}productos?cat=sensores` },
+          { label: 'Control de procesos', href: `${base}productos?cat=control` },
         ].map(link => (
           <li>
             <a href={link.href} class="text-[15px] text-white/60 font-light hover:text-[#F47920] transition-colors">
@@ -63,10 +63,10 @@ const base = import.meta.env.BASE_URL
       </h3>
       <ul class="flex flex-col gap-3">
         {[
-          { label: 'Asesoría técnica', href: `${base}/servicios` },
-          { label: 'Mantenimiento', href: `${base}/servicios` },
-          { label: 'Instalación', href: `${base}/servicios` },
-          { label: 'Calibración', href: `${base}/servicios` },
+          { label: 'Asesoría técnica', href: `${base}servicios` },
+          { label: 'Mantenimiento', href: `${base}servicios` },
+          { label: 'Instalación', href: `${base}servicios` },
+          { label: 'Calibración', href: `${base}servicios` },
         ].map(link => (
           <li>
             <a href={link.href} class="text-[15px] text-white/60 font-light hover:text-[#F47920] transition-colors">
@@ -102,7 +102,7 @@ const base = import.meta.env.BASE_URL
         </li>
       </ul>
 
-      <a href={`${base}/contacto`} class="inline-flex items-center gap-2 mt-8 text-[13px] text-white font-normal hover:gap-3 transition-all border-b border-white/30 pb-1">
+      <a href={`${base}contacto`} class="inline-flex items-center gap-2 mt-8 text-[13px] text-white font-normal hover:gap-3 transition-all border-b border-white/30 pb-1">
         Enviar mensaje
         <span class="text-[#F47920]">→</span>
       </a>

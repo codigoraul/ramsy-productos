@@ -5,7 +5,7 @@ import { getProductos, getCategorias, formatearPrecio, getImagenProducto } from 
 
 const base = import.meta.env.BASE_URL
 
-const productos = await getProductos({ perPage: 50 })
+const productos = await getProductos({ perPage: 20 })
 const categorias = await getCategorias()
 ---
 
