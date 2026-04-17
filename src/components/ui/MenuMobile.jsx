@@ -1,0 +1,183 @@
+import { useState, useEffect } from 'react'
+
+export default function MenuMobile() {
+  const [isOpen, setIsOpen] = useState(false)
+  const [productosOpen, setProductosOpen] = useState(false)
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen)
+    setProductosOpen(false)
+  }
+
+  // Cerrar con ESC
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && isOpen) {
+        setIsOpen(false)
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [isOpen])
+
+  // Prevenir scroll cuando está abierto
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isOpen])
+
+  return (
+    <>
+      {/* Botón hamburguesa que se convierte en X */}
+      <button
+        onClick={toggleMenu}
+        className="lg:hidden p-2 text-gray-700 hover:text-[#F47920] transition-colors relative w-10 h-10"
+        aria-label="Menú"
+        type="button"
+      >
+        <div className="flex flex-col items-center justify-center w-full h-full">
+          <span
+            className={`block w-6 h-0.5 bg-current transition-all duration-300 ${
+              isOpen ? 'rotate-45 translate-y-1.5' : 'mb-1'
+            }`}
+          />
+          <span
+            className={`block w-6 h-0.5 bg-current transition-all duration-300 ${
+              isOpen ? 'opacity-0' : 'mb-1'
+            }`}
+          />
+          <span
+            className={`block w-6 h-0.5 bg-current transition-all duration-300 ${
+              isOpen ? '-rotate-45 -translate-y-1.5' : ''
+            }`}
+          />
+        </div>
+      </button>
+
+      {/* Overlay */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={toggleMenu}
+        />
+      )}
+
+      {/* Menú lateral desde la izquierda */}
+      <div
+        className={`fixed top-16 md:top-0 left-0 h-[calc(100vh-64px)] md:h-full w-[280px] bg-white/95 backdrop-blur-md shadow-2xl z-50 transform transition-transform duration-300 ease-out lg:hidden ${
+          isOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
+        {/* Links */}
+        <nav className="overflow-y-auto h-full py-8">
+          <ul className="space-y-0">
+            <li>
+              <a
+                href="/"
+                className="block py-4 px-6 text-[#0E2346] hover:bg-[#F47920] hover:text-white transition-all font-medium border-b border-gray-100"
+                onClick={toggleMenu}
+              >
+                Inicio
+              </a>
+            </li>
+            <li>
+              <a
+                href="/nosotros"
+                className="block py-4 px-6 text-[#0E2346] hover:bg-[#F47920] hover:text-white transition-all font-medium border-b border-gray-100"
+                onClick={toggleMenu}
+              >
+                Nosotros
+              </a>
+            </li>
+            <li>
+              <a
+                href="/servicios"
+                className="block py-4 px-6 text-[#0E2346] hover:bg-[#F47920] hover:text-white transition-all font-medium border-b border-gray-100"
+                onClick={toggleMenu}
+              >
+                Servicios
+              </a>
+            </li>
+            
+            {/* Productos con submenu */}
+            <li>
+              <button
+                onClick={() => setProductosOpen(!productosOpen)}
+                className="w-full flex items-center justify-between py-4 px-6 text-[#0E2346] hover:bg-[#F47920] hover:text-white transition-all font-medium text-left border-b border-gray-100"
+                type="button"
+              >
+                <span>Productos</span>
+                <svg
+                  className={`w-4 h-4 transition-transform ${productosOpen ? 'rotate-180' : ''}`}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              
+              {productosOpen && (
+                <ul className="bg-gray-50">
+                  <li>
+                    <a
+                      href="/productos"
+                      className="block py-3 pl-12 pr-6 text-sm text-gray-600 hover:bg-[#F47920] hover:text-white transition-all border-b border-gray-100"
+                      onClick={toggleMenu}
+                    >
+                      Todos los productos
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="/productos?cat=instrumentacion"
+                      className="block py-3 pl-12 pr-6 text-sm text-gray-600 hover:bg-[#F47920] hover:text-white transition-all border-b border-gray-100"
+                      onClick={toggleMenu}
+                    >
+                      Instrumentación
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="/productos?cat=automatizacion"
+                      className="block py-3 pl-12 pr-6 text-sm text-gray-600 hover:bg-[#F47920] hover:text-white transition-all border-b border-gray-100"
+                      onClick={toggleMenu}
+                    >
+                      Automatización
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="/productos?cat=electronica"
+                      className="block py-3 pl-12 pr-6 text-sm text-gray-600 hover:bg-[#F47920] hover:text-white transition-all border-b border-gray-100"
+                      onClick={toggleMenu}
+                    >
+                      Electrónica industrial
+                    </a>
+                  </li>
+                </ul>
+              )}
+            </li>
+
+            <li>
+              <a
+                href="/contacto"
+                className="block py-4 px-6 text-[#0E2346] hover:bg-[#F47920] hover:text-white transition-all font-medium border-b border-gray-100"
+                onClick={toggleMenu}
+              >
+                Contacto
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </>
+  )
+}

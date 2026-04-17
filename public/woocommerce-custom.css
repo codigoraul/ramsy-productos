@@ -1,0 +1,267 @@
+/* ============================================
+   RAMSY - Estilos personalizados para WooCommerce
+   ============================================ */
+
+/* Colores principales */
+:root {
+  --ramsy-navy: #0E2346;
+  --ramsy-orange: #F47920;
+  --ramsy-gray: #F5F5F0;
+}
+
+/* ============================================
+   PÁGINA DE CHECKOUT (Finalizar compra)
+   ============================================ */
+
+/* Header del checkout */
+.woocommerce-checkout .site-header,
+.woocommerce-order-received .site-header {
+  background: var(--ramsy-navy) !important;
+}
+
+/* Títulos principales */
+.woocommerce-checkout h1,
+.woocommerce-checkout h2,
+.woocommerce-checkout h3,
+.woocommerce-order-received h1,
+.woocommerce-order-received h2 {
+  color: var(--ramsy-navy) !important;
+  font-weight: 600 !important;
+}
+
+/* Formulario de checkout */
+.woocommerce-checkout .woocommerce-billing-fields h3,
+.woocommerce-checkout .woocommerce-shipping-fields h3,
+.woocommerce-checkout .woocommerce-additional-fields h3 {
+  color: var(--ramsy-navy) !important;
+  font-size: 24px !important;
+  margin-bottom: 20px !important;
+  padding-bottom: 10px !important;
+  border-bottom: 2px solid var(--ramsy-orange) !important;
+}
+
+/* Inputs del formulario */
+.woocommerce-checkout input[type="text"],
+.woocommerce-checkout input[type="email"],
+.woocommerce-checkout input[type="tel"],
+.woocommerce-checkout select,
+.woocommerce-checkout textarea {
+  border: 1px solid #e5e7eb !important;
+  border-radius: 4px !important;
+  padding: 12px 16px !important;
+  font-size: 15px !important;
+  transition: border-color 0.3s ease !important;
+}
+
+.woocommerce-checkout input[type="text"]:focus,
+.woocommerce-checkout input[type="email"]:focus,
+.woocommerce-checkout input[type="tel"]:focus,
+.woocommerce-checkout select:focus,
+.woocommerce-checkout textarea:focus {
+  border-color: var(--ramsy-orange) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(244, 121, 32, 0.1) !important;
+}
+
+/* Labels */
+.woocommerce-checkout label {
+  color: var(--ramsy-navy) !important;
+  font-weight: 500 !important;
+  margin-bottom: 8px !important;
+}
+
+/* Resumen del pedido */
+.woocommerce-checkout-review-order {
+  background: #ffffff !important;
+  border: 2px solid #e5e7eb !important;
+  border-radius: 8px !important;
+  padding: 24px !important;
+}
+
+.woocommerce-checkout-review-order h3 {
+  background: var(--ramsy-navy) !important;
+  color: white !important;
+  padding: 16px 20px !important;
+  margin: -24px -24px 20px -24px !important;
+  border-radius: 6px 6px 0 0 !important;
+  font-size: 20px !important;
+}
+
+/* Tabla del pedido */
+.woocommerce-checkout-review-order-table th {
+  color: var(--ramsy-navy) !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  font-size: 12px !important;
+  letter-spacing: 0.05em !important;
+}
+
+.woocommerce-checkout-review-order-table .order-total th,
+.woocommerce-checkout-review-order-table .order-total td {
+  color: var(--ramsy-navy) !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  border-top: 2px solid var(--ramsy-orange) !important;
+  padding-top: 16px !important;
+}
+
+/* Métodos de pago */
+.woocommerce-checkout-payment {
+  background: var(--ramsy-gray) !important;
+  border-radius: 8px !important;
+  padding: 20px !important;
+  margin-top: 20px !important;
+}
+
+.woocommerce-checkout-payment .wc_payment_methods {
+  border: none !important;
+}
+
+.woocommerce-checkout-payment .wc_payment_method label {
+  color: var(--ramsy-navy) !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+}
+
+.woocommerce-checkout-payment .wc_payment_method input[type="radio"]:checked + label {
+  color: var(--ramsy-orange) !important;
+}
+
+/* Botón de realizar pedido */
+#place_order,
+.woocommerce-checkout .button,
+.woocommerce-order-received .button {
+  background: var(--ramsy-orange) !important;
+  color: white !important;
+  border: none !important;
+  padding: 16px 40px !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  border-radius: 4px !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+}
+
+#place_order:hover,
+.woocommerce-checkout .button:hover,
+.woocommerce-order-received .button:hover {
+  background: #d96a10 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(244, 121, 32, 0.3) !important;
+}
+
+/* ============================================
+   PÁGINA DE CONFIRMACIÓN (Gracias por tu compra)
+   ============================================ */
+
+.woocommerce-order-received .woocommerce-notice {
+  background: #ecfdf5 !important;
+  border-left: 4px solid #10b981 !important;
+  color: #065f46 !important;
+  padding: 20px !important;
+  border-radius: 4px !important;
+  font-size: 16px !important;
+  margin-bottom: 30px !important;
+}
+
+.woocommerce-order-received .woocommerce-order {
+  background: white !important;
+  border: 2px solid #e5e7eb !important;
+  border-radius: 8px !important;
+  padding: 30px !important;
+}
+
+.woocommerce-order-received .woocommerce-order h2 {
+  color: var(--ramsy-navy) !important;
+  border-bottom: 2px solid var(--ramsy-orange) !important;
+  padding-bottom: 12px !important;
+  margin-bottom: 20px !important;
+}
+
+.woocommerce-order-received .woocommerce-table {
+  border: 1px solid #e5e7eb !important;
+}
+
+.woocommerce-order-received .woocommerce-table th {
+  background: var(--ramsy-navy) !important;
+  color: white !important;
+  padding: 12px 16px !important;
+  font-weight: 600 !important;
+}
+
+.woocommerce-order-received .woocommerce-table td {
+  padding: 12px 16px !important;
+  border-bottom: 1px solid #e5e7eb !important;
+}
+
+/* Detalles del pedido */
+.woocommerce-order-overview {
+  background: var(--ramsy-gray) !important;
+  border-radius: 8px !important;
+  padding: 20px !important;
+  margin-bottom: 30px !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 20px !important;
+}
+
+.woocommerce-order-overview li {
+  flex: 1 1 200px !important;
+  text-align: center !important;
+  padding: 16px !important;
+  background: white !important;
+  border-radius: 6px !important;
+  border: 1px solid #e5e7eb !important;
+}
+
+.woocommerce-order-overview strong {
+  display: block !important;
+  color: var(--ramsy-navy) !important;
+  font-size: 12px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  margin-bottom: 8px !important;
+}
+
+.woocommerce-order-overview .woocommerce-order-overview__total {
+  font-size: 24px !important;
+  font-weight: 700 !important;
+  color: var(--ramsy-orange) !important;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  .woocommerce-checkout-review-order h3 {
+    font-size: 18px !important;
+  }
+  
+  #place_order {
+    width: 100% !important;
+    padding: 18px 20px !important;
+  }
+  
+  .woocommerce-order-overview {
+    flex-direction: column !important;
+  }
+}
+
+/* ============================================
+   LOGO EN CHECKOUT
+   ============================================ */
+
+.woocommerce-checkout .site-branding,
+.woocommerce-order-received .site-branding {
+  text-align: center !important;
+  padding: 30px 0 !important;
+}
+
+.woocommerce-checkout .site-branding img,
+.woocommerce-order-received .site-branding img {
+  max-width: 200px !important;
+  height: auto !important;
+}

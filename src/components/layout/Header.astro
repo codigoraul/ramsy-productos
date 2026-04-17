@@ -1,11 +1,12 @@
 ---
 import ContadorCarrito from '../ui/ContadorCarrito.jsx'
 import { BotonBuscador } from '../ui/BuscadorModal.jsx'
+import MenuMobile from '../ui/MenuMobile.jsx'
 ---
 
 <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100">
   <!-- Top bar -->
-  <div class="bg-[#F47920] text-white text-sm font-light py-3">
+  <div class="hidden md:block bg-[#F47920] text-white text-sm font-light py-3">
     <div class="max-w-[1200px] mx-auto px-10 flex justify-between items-center tracking-wide">
       <span>Lun – Vie · 09:00 – 18:00</span>
       <span>contacto@ramsy.cl &nbsp;·&nbsp; +56 9 XXXX XXXX</span>
@@ -13,22 +14,22 @@ import { BotonBuscador } from '../ui/BuscadorModal.jsx'
   </div>
 
   <!-- Nav principal -->
-  <nav class="max-w-[1200px] mx-auto px-10 flex items-center gap-12 h-24">
+  <nav class="max-w-[1200px] mx-auto px-6 md:px-10 flex items-center gap-6 md:gap-12 h-16 md:h-24">
 
     <!-- Logo -->
-    <a href="/" class="flex items-center gap-4 flex-shrink-0">
+    <a href="/" class="flex items-center gap-3 md:gap-4 flex-shrink-0">
       <img 
         src="/logo-ramsy.svg" 
         alt="Ramsy" 
-        style="width: 156px; height: auto;"
+        class="w-24 md:w-[156px] h-auto"
       />
-      <span class="text-[11px] font-light uppercase tracking-[0.15em] text-gray-400 border-l border-gray-200 pl-3 max-w-[130px] leading-tight">
+      <span class="hidden md:block text-[11px] font-light uppercase tracking-[0.15em] text-gray-400 border-l border-gray-200 pl-3 max-w-[130px] leading-tight">
         Instrumentación industrial
       </span>
     </a>
 
     <!-- Links navegación más grandes y legibles -->
-    <ul class="flex items-center gap-10 list-none m-0 p-0 ml-auto">
+    <ul class="hidden lg:flex items-center gap-10 list-none m-0 p-0 ml-auto">
       <li>
         <a href="/" class="text-[16px] font-medium tracking-wide text-gray-700 hover:text-[#0E2346] transition-colors py-2 relative group">
           Inicio
@@ -73,12 +74,16 @@ import { BotonBuscador } from '../ui/BuscadorModal.jsx'
     </ul>
 
     <!-- CTA -->
-    <div class="flex items-center gap-4 pl-5 border-l border-gray-100">
+    <div class="hidden lg:flex items-center gap-4 pl-5 border-l border-gray-100">
       <BotonBuscador client:load />
-      <a href="/contacto" class="hidden md:inline-block bg-[#F47920] hover:bg-[#d96a10] text-white text-[14px] font-medium tracking-wide px-6 py-3 transition-colors rounded-[2px]">
-        Cotizar
-      </a>
       <ContadorCarrito client:load />
+    </div>
+
+    <!-- Menú móvil y carrito -->
+    <div class="flex lg:hidden items-center gap-4 ml-auto">
+      <BotonBuscador client:load />
+      <ContadorCarrito client:load />
+      <MenuMobile client:load />
     </div>
 
   </nav>
