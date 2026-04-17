@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 
+const base = import.meta.env.BASE_URL
+
 export default function ContadorCarrito() {
   const [count, setCount] = useState(0)
 
@@ -24,7 +26,7 @@ export default function ContadorCarrito() {
 
   return (
     <a
-      href="/carrito"
+      href={`${base}/carrito`}
       className="relative text-gray-700 hover:text-[#F47920] transition-colors"
       aria-label="Carrito de compras"
     >
