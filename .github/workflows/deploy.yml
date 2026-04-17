@@ -25,7 +25,7 @@ jobs:
       - name: Build Astro site
         run: npm run build
         env:
-          WORDPRESS_URL: https://ramsy.cl/admin
+          WP_URL: https://ramsy.cl/admin
           WC_CONSUMER_KEY: ${{ secrets.WC_CONSUMER_KEY }}
           WC_CONSUMER_SECRET: ${{ secrets.WC_CONSUMER_SECRET }}
 
