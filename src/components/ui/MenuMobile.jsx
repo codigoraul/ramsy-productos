@@ -90,7 +90,7 @@ export default function MenuMobile() {
             </li>
             <li>
               <a
-                href={`${base}nosotros`}
+                href={`${base}/nosotros`}
                 className="block py-4 px-6 text-[#0E2346] hover:bg-[#F47920] hover:text-white transition-all font-medium border-b border-gray-100"
                 onClick={toggleMenu}
               >
@@ -99,7 +99,7 @@ export default function MenuMobile() {
             </li>
             <li>
               <a
-                href={`${base}servicios`}
+                href={`${base}/servicios`}
                 className="block py-4 px-6 text-[#0E2346] hover:bg-[#F47920] hover:text-white transition-all font-medium border-b border-gray-100"
                 onClick={toggleMenu}
               >
@@ -130,7 +130,7 @@ export default function MenuMobile() {
                 <ul className="bg-gray-50">
                   <li>
                     <a
-                      href={`${base}productos`}
+                      href={`${base}/productos`}
                       className="block py-3 pl-12 pr-6 text-sm text-gray-600 hover:bg-[#F47920] hover:text-white transition-all border-b border-gray-100"
                       onClick={toggleMenu}
                     >
@@ -139,7 +139,7 @@ export default function MenuMobile() {
                   </li>
                   <li>
                     <a
-                      href={`${base}productos?cat=instrumentacion`}
+                      href={`${base}/productos?cat=instrumentacion`}
                       className="block py-3 pl-12 pr-6 text-sm text-gray-600 hover:bg-[#F47920] hover:text-white transition-all border-b border-gray-100"
                       onClick={toggleMenu}
                     >
@@ -148,7 +148,7 @@ export default function MenuMobile() {
                   </li>
                   <li>
                     <a
-                      href={`${base}productos?cat=automatizacion`}
+                      href={`${base}/productos?cat=automatizacion`}
                       className="block py-3 pl-12 pr-6 text-sm text-gray-600 hover:bg-[#F47920] hover:text-white transition-all border-b border-gray-100"
                       onClick={toggleMenu}
                     >
@@ -157,7 +157,7 @@ export default function MenuMobile() {
                   </li>
                   <li>
                     <a
-                      href={`${base}productos?cat=electronica`}
+                      href={`${base}/productos?cat=electronica`}
                       className="block py-3 pl-12 pr-6 text-sm text-gray-600 hover:bg-[#F47920] hover:text-white transition-all border-b border-gray-100"
                       onClick={toggleMenu}
                     >
@@ -170,7 +170,7 @@ export default function MenuMobile() {
 
             <li>
               <a
-                href={`${base}contacto`}
+                href={`${base}/contacto`}
                 className="block py-4 px-6 text-[#0E2346] hover:bg-[#F47920] hover:text-white transition-all font-medium border-b border-gray-100"
                 onClick={toggleMenu}
               >
