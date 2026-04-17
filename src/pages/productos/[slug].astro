@@ -1,9 +1,16 @@
 ---
-export const prerender = false
+export const prerender = true
 
 import Layout from '../../layouts/Layout.astro'
 import Breadcrumb from '../../components/ui/Breadcrumb.astro'
-import { getProductoBySlug, formatearPrecio, getImagenProducto } from '../../lib/woocommerce.js'
+import { getProductoBySlug, formatearPrecio, getImagenProducto, getProductos } from '../../lib/woocommerce.js'
+
+export async function getStaticPaths() {
+  const productos = await getProductos()
+  return productos.map(producto => ({
+    params: { slug: producto.slug }
+  }))
+}
 
 const { slug } = Astro.params
 const producto = await getProductoBySlug(slug)
