@@ -166,7 +166,7 @@ import Breadcrumb from '../components/ui/Breadcrumb.astro'
         checkoutBtn.textContent = 'Procesando...'
 
         try {
-          const wpUrl = 'http://localhost:10033'
+          const wpUrl = 'https://ramsy.cl/admin'
           
           // Enviar productos al endpoint personalizado de WordPress
           const response = await fetch(`${wpUrl}/wp-json/ramsy/v1/add-to-cart`, {
