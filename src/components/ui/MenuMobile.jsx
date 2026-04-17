@@ -4,11 +4,9 @@ const base = import.meta.env.BASE_URL
 
 export default function MenuMobile() {
   const [isOpen, setIsOpen] = useState(false)
-  const [productosOpen, setProductosOpen] = useState(false)
 
   const toggleMenu = () => {
     setIsOpen(!isOpen)
-    setProductosOpen(false)
   }
 
   // Cerrar con ESC
@@ -90,7 +88,7 @@ export default function MenuMobile() {
             </li>
             <li>
               <a
-                href={`${base}nosotros`}
+                href={`${base}/nosotros`}
                 className="block py-4 px-6 text-[#0E2346] hover:bg-[#F47920] hover:text-white transition-all font-medium border-b border-gray-100"
                 onClick={toggleMenu}
               >
@@ -99,7 +97,7 @@ export default function MenuMobile() {
             </li>
             <li>
               <a
-                href={`${base}servicios`}
+                href={`${base}/servicios`}
                 className="block py-4 px-6 text-[#0E2346] hover:bg-[#F47920] hover:text-white transition-all font-medium border-b border-gray-100"
                 onClick={toggleMenu}
               >
@@ -107,70 +105,19 @@ export default function MenuMobile() {
               </a>
             </li>
             
-            {/* Productos con submenu */}
             <li>
-              <button
-                onClick={() => setProductosOpen(!productosOpen)}
-                className="w-full flex items-center justify-between py-4 px-6 text-[#0E2346] hover:bg-[#F47920] hover:text-white transition-all font-medium text-left border-b border-gray-100"
-                type="button"
+              <a
+                href={`${base}/productos`}
+                className="block py-4 px-6 text-[#0E2346] hover:bg-[#F47920] hover:text-white transition-all font-medium border-b border-gray-100"
+                onClick={toggleMenu}
               >
-                <span>Productos</span>
-                <svg
-                  className={`w-4 h-4 transition-transform ${productosOpen ? 'rotate-180' : ''}`}
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              
-              {productosOpen && (
-                <ul className="bg-gray-50">
-                  <li>
-                    <a
-                      href={`${base}productos`}
-                      className="block py-3 pl-12 pr-6 text-sm text-gray-600 hover:bg-[#F47920] hover:text-white transition-all border-b border-gray-100"
-                      onClick={toggleMenu}
-                    >
-                      Todos los productos
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href={`${base}productos?cat=instrumentacion`}
-                      className="block py-3 pl-12 pr-6 text-sm text-gray-600 hover:bg-[#F47920] hover:text-white transition-all border-b border-gray-100"
-                      onClick={toggleMenu}
-                    >
-                      Instrumentación
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href={`${base}productos?cat=automatizacion`}
-                      className="block py-3 pl-12 pr-6 text-sm text-gray-600 hover:bg-[#F47920] hover:text-white transition-all border-b border-gray-100"
-                      onClick={toggleMenu}
-                    >
-                      Automatización
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href={`${base}productos?cat=electronica`}
-                      className="block py-3 pl-12 pr-6 text-sm text-gray-600 hover:bg-[#F47920] hover:text-white transition-all border-b border-gray-100"
-                      onClick={toggleMenu}
-                    >
-                      Electrónica industrial
-                    </a>
-                  </li>
-                </ul>
-              )}
+                Productos
+              </a>
             </li>
 
             <li>
               <a
-                href={`${base}contacto`}
+                href={`${base}/contacto`}
                 className="block py-4 px-6 text-[#0E2346] hover:bg-[#F47920] hover:text-white transition-all font-medium border-b border-gray-100"
                 onClick={toggleMenu}
               >
