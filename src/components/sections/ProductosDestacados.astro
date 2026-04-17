@@ -1,6 +1,8 @@
 ---
 import { getProductos, formatearPrecio, getImagenProducto } from '../../lib/woocommerce.js'
 
+const base = import.meta.env.BASE_URL
+
 // Obtener los primeros 8 productos (4 columnas x 2 filas)
 const productos = await getProductos({ perPage: 8 })
 ---
@@ -29,7 +31,7 @@ const productos = await getProductos({ perPage: 8 })
         
         return (
           <a 
-            href={`/productos/${producto.slug}`}
+            href={`${base}productos/${producto.slug}`}
             class="group bg-white border border-gray-200 hover:border-[#F47920] transition-all duration-300 hover:shadow-lg"
           >
             {/* Imagen - más pequeña */}

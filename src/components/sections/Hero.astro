@@ -1,4 +1,5 @@
 ---
+const base = import.meta.env.BASE_URL
 ---
 
 <section class="relative bg-[#0E2346] min-h-[640px] flex items-center overflow-hidden">
@@ -6,7 +7,7 @@
   <!-- Fondo con imagen -->
   <div class="absolute inset-0">
     <!-- Imagen de fondo -->
-    <div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('/images/hero-bg.webp');"></div>
+    <div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style={`background-image: url('${base}images/hero-bg.webp');`}></div>
     <!-- Overlay con gradiente: oscuro izquierda (texto), translúcido derecha (imagen visible) -->
     <div class="absolute inset-0 bg-gradient-to-r from-[#0E2346]/95 via-[#0E2346]/70 to-[#0E2346]/30"></div>
     <!-- Acento naranja sutil -->
@@ -36,10 +37,10 @@
 
       <!-- Botones más presentes -->
       <div class="flex gap-6 flex-wrap items-center">
-        <a href="/productos" class="bg-[#F47920] hover:bg-[#d96a10] text-white font-medium text-base tracking-wide px-10 py-5 transition-colors rounded-[2px]">
+        <a href={`${base}/productos`} class="bg-[#F47920] hover:bg-[#d96a10] text-white font-medium text-base tracking-wide px-10 py-5 transition-colors rounded-[2px]">
           Ver productos
         </a>
-        <a href="/contacto" class="inline-flex items-center gap-2.5 text-white font-normal text-base tracking-wide px-3 py-5 hover:gap-4 transition-all">
+        <a href={`${base}/contacto`} class="inline-flex items-center gap-2.5 text-white font-normal text-base tracking-wide px-3 py-5 hover:gap-4 transition-all">
           Solicitar cotización
           <span class="text-[#F47920] text-lg">→</span>
         </a>

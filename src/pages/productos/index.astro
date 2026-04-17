@@ -3,6 +3,8 @@ import Layout from '../../layouts/Layout.astro'
 import Breadcrumb from '../../components/ui/Breadcrumb.astro'
 import { getProductos, getCategorias, formatearPrecio, getImagenProducto } from '../../lib/woocommerce.js'
 
+const base = import.meta.env.BASE_URL
+
 const productos = await getProductos({ perPage: 50 })
 const categorias = await getCategorias()
 ---
@@ -70,7 +72,7 @@ const categorias = await getCategorias()
                 data-categorias={categoriaSlug}
               >
                 {/* Imagen */}
-                <a href={`/productos/${producto.slug}`} class="block bg-[#F5F5F0] p-6 overflow-hidden">
+                <a href={`${base}productos/${producto.slug}`} class="block bg-[#F5F5F0] p-6 overflow-hidden">
                   <img 
                     src={imagen} 
                     alt={producto.name}
@@ -89,7 +91,7 @@ const categorias = await getCategorias()
 
                   {/* Nombre */}
                   <h3 class="text-[#0E2346] font-semibold mb-3 group-hover:text-[#F47920] transition-colors text-xl">
-                    <a href={`/productos/${producto.slug}`}>
+                    <a href={`${base}productos/${producto.slug}`}>
                       {producto.name}
                     </a>
                   </h3>
@@ -121,7 +123,7 @@ const categorias = await getCategorias()
 
                   {/* Botón */}
                   <a 
-                    href={`/productos/${producto.slug}`}
+                    href={`${base}productos/${producto.slug}`}
                     class="mt-4 block w-full text-center bg-[#F47920] text-white px-6 py-3 font-medium tracking-wide hover:bg-[#d66a1a] transition-colors"
                   >
                     Ver detalles
