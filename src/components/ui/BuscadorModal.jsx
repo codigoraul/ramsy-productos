@@ -46,9 +46,23 @@ export default function BuscadorModal() {
         const consumerKey = 'ck_4bc9a5870b1c8504a3a9a206c783c1aec5af39a3'
         const consumerSecret = 'cs_87087f5cab05a34150e5bf71005ecec341f70b58'
         
+        // Usar autenticación básica en headers
+        const auth = btoa(`${consumerKey}:${consumerSecret}`)
+        
         const response = await fetch(
-          `${wpUrl}/wp-json/wc/v3/products?search=${encodeURIComponent(query)}&per_page=10&consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`
+          `${wpUrl}/wp-json/wc/v3/products?search=${encodeURIComponent(query)}&per_page=10`,
+          {
+            headers: {
+              'Authorization': `Basic ${auth}`,
+              'Content-Type': 'application/json'
+            }
+          }
         )
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        
         const productos = await response.json()
         
         // Mapear al formato esperado
@@ -288,9 +302,23 @@ function BuscadorModalInterno({ onClose }) {
         const consumerKey = 'ck_4bc9a5870b1c8504a3a9a206c783c1aec5af39a3'
         const consumerSecret = 'cs_87087f5cab05a34150e5bf71005ecec341f70b58'
         
+        // Usar autenticación básica en headers
+        const auth = btoa(`${consumerKey}:${consumerSecret}`)
+        
         const response = await fetch(
-          `${wpUrl}/wp-json/wc/v3/products?search=${encodeURIComponent(query)}&per_page=10&consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`
+          `${wpUrl}/wp-json/wc/v3/products?search=${encodeURIComponent(query)}&per_page=10`,
+          {
+            headers: {
+              'Authorization': `Basic ${auth}`,
+              'Content-Type': 'application/json'
+            }
+          }
         )
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        
         const productos = await response.json()
         
         // Mapear al formato esperado
