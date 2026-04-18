@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 
+const base = import.meta.env.BASE_URL
+
 export default function BuscadorModal() {
   const [isOpen, setIsOpen] = useState(false)
   const [query, setQuery] = useState('')
@@ -40,9 +42,27 @@ export default function BuscadorModal() {
     const buscar = async () => {
       setLoading(true)
       try {
-        const response = await fetch(`/api/buscar?q=${encodeURIComponent(query)}`)
-        const data = await response.json()
-        setResultados(data.productos || [])
+        const wpUrl = 'https://ramsy.cl/admin'
+        const consumerKey = 'ck_4bc9a5870b1c8504a3a9a206c783c1aec5af39a3'
+        const consumerSecret = 'cs_87087f5cab05a34150e5bf71005ecec341f70b58'
+        
+        const response = await fetch(
+          `${wpUrl}/wp-json/wc/v3/products?search=${encodeURIComponent(query)}&per_page=10&consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`
+        )
+        const productos = await response.json()
+        
+        // Mapear al formato esperado
+        const productosFormateados = productos.map(p => ({
+          id: p.id,
+          name: p.name,
+          slug: p.slug,
+          price: p.price,
+          images: p.images,
+          sku: p.sku,
+          stock_status: p.stock_status
+        }))
+        
+        setResultados(productosFormateados)
       } catch (error) {
         console.error('Error al buscar:', error)
         setResultados([])
@@ -126,7 +146,7 @@ export default function BuscadorModal() {
               {resultados.map((producto) => (
                 <a
                   key={producto.id}
-                  href={`/productos/${producto.slug}`}
+                  href={`${base}/productos/${producto.slug}`}
                   className="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition-colors group"
                   onClick={() => setIsOpen(false)}
                 >
@@ -264,9 +284,27 @@ function BuscadorModalInterno({ onClose }) {
     const buscar = async () => {
       setLoading(true)
       try {
-        const response = await fetch(`/api/buscar?q=${encodeURIComponent(query)}`)
-        const data = await response.json()
-        setResultados(data.productos || [])
+        const wpUrl = 'https://ramsy.cl/admin'
+        const consumerKey = 'ck_4bc9a5870b1c8504a3a9a206c783c1aec5af39a3'
+        const consumerSecret = 'cs_87087f5cab05a34150e5bf71005ecec341f70b58'
+        
+        const response = await fetch(
+          `${wpUrl}/wp-json/wc/v3/products?search=${encodeURIComponent(query)}&per_page=10&consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`
+        )
+        const productos = await response.json()
+        
+        // Mapear al formato esperado
+        const productosFormateados = productos.map(p => ({
+          id: p.id,
+          name: p.name,
+          slug: p.slug,
+          price: p.price,
+          images: p.images,
+          sku: p.sku,
+          stock_status: p.stock_status
+        }))
+        
+        setResultados(productosFormateados)
       } catch (error) {
         console.error('Error al buscar:', error)
         setResultados([])
@@ -351,7 +389,7 @@ function BuscadorModalInterno({ onClose }) {
               {resultados.map((producto) => (
                 <a
                   key={producto.id}
-                  href={`/productos/${producto.slug}`}
+                  href={`${base}/productos/${producto.slug}`}
                   className="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition-colors group"
                   onClick={onClose}
                 >
