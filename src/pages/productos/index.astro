@@ -90,7 +90,7 @@ const categorias = await getCategorias()
                   )}
 
                   {/* Nombre */}
-                  <h3 class="text-[#0E2346] font-semibold mb-3 group-hover:text-[#F47920] transition-colors text-xl">
+                  <h3 class="text-[#0E2346] font-semibold mb-3 group-hover:text-[#F47920] transition-colors text-2xl">
                     <a href={`${base}/productos/${producto.slug}`}>
                       {producto.name}
                     </a>
@@ -168,31 +168,48 @@ const categorias = await getCategorias()
   const filterButtons = document.querySelectorAll('.categoria-filter')
   const productCards = document.querySelectorAll('.producto-card')
 
+  // Función para filtrar productos
+  function filtrarProductos(categoria) {
+    // Update active button
+    filterButtons.forEach(btn => {
+      const btnCategoria = btn.getAttribute('data-categoria')
+      if (btnCategoria === categoria) {
+        btn.classList.add('active', 'bg-[#F47920]', 'text-white')
+        btn.classList.remove('bg-gray-100', 'text-gray-700')
+      } else {
+        btn.classList.remove('active', 'bg-[#F47920]', 'text-white')
+        btn.classList.add('bg-gray-100', 'text-gray-700')
+      }
+    })
+    
+    // Filter products
+    productCards.forEach(card => {
+      if (categoria === 'todas') {
+        card.style.display = 'block'
+      } else {
+        const categorias = card.getAttribute('data-categorias')
+        if (categorias && categorias.includes(categoria)) {
+          card.style.display = 'block'
+        } else {
+          card.style.display = 'none'
+        }
+      }
+    })
+  }
+
+  // Leer parámetro de URL al cargar la página
+  const urlParams = new URLSearchParams(window.location.search)
+  const categoriaInicial = urlParams.get('categoria')
+  
+  if (categoriaInicial) {
+    filtrarProductos(categoriaInicial)
+  }
+
+  // Event listeners para los botones
   filterButtons.forEach(button => {
     button.addEventListener('click', () => {
       const categoria = button.getAttribute('data-categoria')
-      
-      // Update active button
-      filterButtons.forEach(btn => {
-        btn.classList.remove('active', 'bg-[#F47920]', 'text-white')
-        btn.classList.add('bg-gray-100', 'text-gray-700')
-      })
-      button.classList.add('active', 'bg-[#F47920]', 'text-white')
-      button.classList.remove('bg-gray-100', 'text-gray-700')
-      
-      // Filter products
-      productCards.forEach(card => {
-        if (categoria === 'todas') {
-          card.style.display = 'block'
-        } else {
-          const categorias = card.getAttribute('data-categorias')
-          if (categorias && categorias.includes(categoria)) {
-            card.style.display = 'block'
-          } else {
-            card.style.display = 'none'
-          }
-        }
-      })
+      filtrarProductos(categoria)
     })
   })
 </script>

@@ -1,6 +1,8 @@
 ---
 import { getCategorias } from '../../lib/woocommerce.js'
 
+const base = import.meta.env.BASE_URL
+
 // Obtener todas las categorías con productos
 const categorias = await getCategorias()
 ---
@@ -29,7 +31,7 @@ const categorias = await getCategorias()
         
         return (
           <a 
-            href={`/productos?categoria=${categoria.slug}`}
+            href={`${base}/productos?categoria=${categoria.slug}`}
             class="group bg-white hover:bg-[#0E2346] transition-all duration-300 overflow-hidden hover:shadow-xl"
           >
             {/* Imagen de categoría */}
