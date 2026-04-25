@@ -1,4 +1,4 @@
-# Astro Starter Kit: Minimal
+# Ramsy - Sitio de Productosnimal
 
 ```sh
 npm create astro@latest -- --template minimal
