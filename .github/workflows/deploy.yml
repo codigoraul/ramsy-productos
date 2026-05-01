@@ -29,13 +29,12 @@ jobs:
           WC_CONSUMER_KEY: ${{ secrets.WC_CONSUMER_KEY }}
           WC_CONSUMER_SECRET: ${{ secrets.WC_CONSUMER_SECRET }}
 
-      - name: Deploy via SFTP
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+      - name: Deploy to FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          remote_path: ${{ secrets.FTP_SERVER_DIR }}
-          local_path: ./dist/*
-          sftp_only: true
-          delete_remote_files: true
+          server-dir: ${{ secrets.FTP_SERVER_DIR }}/
+          local-dir: ./dist/
+          dangerous-clean-slate: true
