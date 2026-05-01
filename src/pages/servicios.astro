@@ -1,33 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import Breadcrumb from '../components/ui/Breadcrumb.astro'
-
-const servicios = [
-  {
-    slug: 'servicios-e-instalaciones',
-    titulo: 'Servicios e instalaciones',
-    descripcion: 'Diseño y armado de tableros eléctricos. Armado de cables automotriz y de instrumentación y control.',
-    imagen: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=900&q=80',
-  },
-  {
-    slug: 'tableros-de-faena',
-    titulo: 'Tableros de faena',
-    descripcion: 'Tableros de faena metálica y tableros de faena externos para operaciones industriales exigentes.',
-    imagen: 'https://images.unsplash.com/photo-1565608087341-404b25492fee?auto=format&fit=crop&w=900&q=80',
-  },
-  {
-    slug: 'tableros-neumaticos',
-    titulo: 'Tableros neumáticos',
-    descripcion: 'Diseño, armado e instalación de tableros electroneumáticos para sistemas de control industrial.',
-    imagen: 'https://images.unsplash.com/photo-1580982327559-c1202864eb05?auto=format&fit=crop&w=900&q=80',
-  },
-  {
-    slug: 'armado-de-cables',
-    titulo: 'Armado de cables',
-    descripcion: 'Armado de cables automotriz para maquinaria. Armado de cables de instrumentación y señales.',
-    imagen: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=900&q=80',
-  },
-]
+import Servicios from '../components/sections/Servicios.astro'
 ---
 
 <Layout
@@ -43,68 +17,7 @@ const servicios = [
     backgroundImage="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=1600&q=80"
   />
 
-  <!-- Intro -->
-  <section class="bg-white py-24">
-    <div class="max-w-[1200px] mx-auto px-10">
-      <div class="max-w-3xl">
-        <p class="text-[#F47920] text-sm font-medium uppercase tracking-[0.22em] mb-7">
-          Lo que hacemos
-        </p>
-        <h2 class="text-[#0E2346] font-semibold mb-7" style="font-size: 42px; line-height: 1.08; letter-spacing: -0.025em;">
-          Servicios técnicos integrales
-        </h2>
-        <p class="text-gray-500 font-light" style="font-size: clamp(1.1rem, 1.4vw, 1.25rem); line-height: 1.7;">
-          Acompañamos cada proyecto desde el diagnóstico inicial hasta la puesta en marcha y el soporte continuo,
-          con estándares corporativos y enfoque en la confiabilidad del proceso.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Grid servicios 3 columnas -->
-  <section class="bg-[#F5F5F0] py-24">
-    <div class="max-w-[1200px] mx-auto px-10">
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        {servicios.map((servicio) => (
-          <article class="bg-white group flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl">
-
-            <!-- Imagen -->
-            <div class="relative overflow-hidden bg-gray-100" style="aspect-ratio: 4/3;">
-              <img
-                src={servicio.imagen}
-                alt={servicio.titulo}
-                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              <!-- Overlay naranja sutil al hover -->
-              <div class="absolute inset-0 bg-[#F47920]/0 group-hover:bg-[#F47920]/10 transition-colors duration-300"></div>
-            </div>
-
-            <!-- Contenido -->
-            <div class="p-8 flex flex-col flex-grow">
-              <h3 class="text-[#0E2346] font-semibold tracking-tight leading-snug mb-4" style="font-size: 1.5rem; letter-spacing: -0.015em;">
-                {servicio.titulo}
-              </h3>
-
-              <p class="text-gray-500 font-light leading-[1.7] mb-8 flex-grow" style="font-size: 1rem;">
-                {servicio.descripcion}
-              </p>
-
-              <a
-                href={`/servicios/${servicio.slug}`}
-                class="inline-flex items-center gap-2 text-[#0E2346] group-hover:text-[#F47920] font-medium text-sm tracking-wide transition-all self-start"
-              >
-                Leer más
-                <span class="text-[#F47920] transition-transform group-hover:translate-x-1">→</span>
-              </a>
-            </div>
-
-          </article>
-        ))}
-      </div>
-
-    </div>
-  </section>
+  <Servicios />
 
   <!-- CTA final -->
   <section class="py-28 bg-[#0E2346] text-white">

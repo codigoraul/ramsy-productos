@@ -1,76 +1,239 @@
 ---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '')
+
 const servicios = [
   {
-    icono: 'M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v10m0 0h10m-10 0a2 2 0 01-2 2H5a2 2 0 01-2-2v-4m12 6a2 2 0 002-2v-4m0 0H9',
-    titulo: 'Servicios e instalaciones',
-    descripcion: 'Diseño y armado de tableros eléctricos. Armado de cables automotriz y de instrumentación y control.',
+    id: "servicios-instalaciones",
+    tag: "Instalaciones",
+    nombre: "Servicios e instalaciones",
+    imagen: `${base}/images/servicios/servicios-instalaciones.webp`,
+    imagenAlt: "Servicio y reparación de herramientas eléctricas Makita",
+    items: [
+      "Diseño y armado de tableros eléctricos",
+      "Armado de cables automotriz y de instrumentación y control",
+      "Mantención y reparación de herramientas eléctricas Makita",
+    ],
   },
   {
-    icono: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4',
-    titulo: 'Tableros de faena',
-    descripcion: 'Tableros de faena metálica y tableros de faena externos para operaciones industriales exigentes.',
+    id: "tableros-faena",
+    tag: "Faena",
+    nombre: "Tableros de faena",
+    imagen: `${base}/images/servicios/tablero-metalico.png`,
+    imagenAlt: "Tablero de faena metálico RAMSY",
+    items: [
+      "Tablero de faena metálico",
+      "Tablero de faena estanco ABS",
+    ],
   },
   {
-    icono: 'M13 10V3L4 14h7v7l9-11h-7z',
-    titulo: 'Tableros neumáticos',
-    descripcion: 'Diseño, armado e instalación de tableros electroneumáticos para sistemas de control industrial.',
+    id: "tableros-neumaticos",
+    tag: "Neumática",
+    nombre: "Tableros neumáticos",
+    imagen: `${base}/images/servicios/tableros-neumaticos.jpg`,
+    imagenAlt: "Tableros electroneumáticos industriales",
+    items: [
+      "Tableros electroneumáticos",
+    ],
   },
   {
-    icono: 'M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7M4 7c0-2 1-3 3-3h10c2 0 3 1 3 3M4 7h16M9 11v4m3-4v4m3-4v4',
-    titulo: 'Armado de cables',
-    descripcion: 'Armado de cables automotriz para maquinaria. Armado de cables de instrumentación y señales.',
+    id: "armado-cables",
+    tag: "Cableado",
+    nombre: "Armado de cables",
+    imagen: `${base}/images/servicios/armado-cables.jpg`,
+    imagenAlt: "Armado de cables de instrumentación",
+    items: [
+      "Cables automotriz para maquinaria",
+      "Cables de instrumentación y señales",
+    ],
   },
 ]
 ---
 
-<section class="py-32 bg-white">
-  <div class="max-w-[1200px] mx-auto px-8">
+<section class="servicios-section">
+  <div class="servicios-container">
 
-    <!-- Header sección — grande y refinado -->
-    <div class="max-w-3xl mb-24">
-      <p class="text-[#F47920] text-sm font-medium uppercase tracking-[0.22em] mb-7">
-        Lo que hacemos
-      </p>
-      <h2 class="text-[#0E2346] font-semibold mb-7" style="font-size: 42px; line-height: 1.08; letter-spacing: -0.025em;">
-        Capacidades técnicas integrales
-      </h2>
-      <p class="text-gray-500 font-light" style="font-size: clamp(1.1rem, 1.4vw, 1.3rem); line-height: 1.7;">
-        Acompañamos cada proyecto desde el diagnóstico hasta la operación continua, con enfoque en la confiabilidad del proceso.
-      </p>
+    <div class="servicios-header">
+      <p class="servicios-eyebrow">Lo que hacemos</p>
+      <h2 class="servicios-titulo">Servicio de mantenimiento y reparación de herramientas eléctricas Makita</h2>
     </div>
 
-    <!-- Grid servicios -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-      {servicios.map((servicio, i) => (
-        <div class="group border-t border-gray-200 pt-10 transition-all duration-300">
-          <span class="block text-[#F47920] text-sm font-medium tracking-[0.15em] mb-8">
-            {String(i + 1).padStart(2, '0')}
-          </span>
-
-          <div class="w-12 h-12 flex items-center justify-center mb-7 transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-[#1B3A6B] group-hover:text-[#F47920] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.25" d={servicio.icono} />
-            </svg>
+    <div class="servicios-grid">
+      {servicios.map((s) => (
+        <article class="srv-card">
+          <div class="srv-img-wrap">
+            <img src={s.imagen} alt={s.imagenAlt} loading="lazy" class="srv-img" />
           </div>
-
-          <h3 class="text-[#0E2346] font-semibold tracking-tight leading-snug mb-4" style="font-size: 1.5rem; letter-spacing: -0.015em;">
-            {servicio.titulo}
-          </h3>
-
-          <p class="text-gray-500 font-light" style="font-size: 1.05rem; line-height: 1.7;">
-            {servicio.descripcion}
-          </p>
-        </div>
+          <div class="srv-body">
+            <span class="srv-tag">{s.tag}</span>
+            <h3 class="srv-nombre">{s.nombre}</h3>
+            <ul class="srv-items">
+              {s.items.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </div>
+        </article>
       ))}
-    </div>
-
-    <!-- CTA -->
-    <div class="mt-24">
-      <a href="/servicios" class="inline-flex items-center gap-3 text-[#0E2346] font-medium text-base tracking-wide hover:gap-4 transition-all border-b border-[#0E2346] pb-2">
-        Ver todos los servicios
-        <span class="text-[#F47920] text-lg">→</span>
-      </a>
     </div>
 
   </div>
 </section>
+
+<style>
+  .servicios-section {
+    background-color: #F5F5F0;
+    padding: 64px 0 80px;
+  }
+
+  .servicios-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .servicios-header {
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  .servicios-eyebrow {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #F47920;
+    margin-bottom: 10px;
+  }
+
+  .servicios-titulo {
+    font-size: 32px;
+    font-weight: 600;
+    color: #0E2346;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .servicios-desc {
+    font-size: 17px;
+    color: #666;
+    line-height: 1.7;
+    max-width: 560px;
+    font-weight: 300;
+  }
+
+  .servicios-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .srv-card {
+    background: #ffffff;
+    border-radius: 6px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #e4e4e0;
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+  }
+
+  .srv-card:hover {
+    box-shadow: 0 10px 32px rgba(14, 35, 70, 0.10);
+    transform: translateY(-4px);
+  }
+
+  .srv-img-wrap {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #0E2346 0%, #1B3A6B 100%);
+    flex-shrink: 0;
+  }
+
+  .srv-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .srv-card:hover .srv-img {
+    transform: scale(1.04);
+  }
+
+  .srv-body {
+    padding: 22px 22px 26px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .srv-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: #FFF0E6;
+    color: #C45F0A;
+    padding: 3px 9px;
+    border-radius: 3px;
+    margin-bottom: 12px;
+    align-self: flex-start;
+  }
+
+  .srv-nombre {
+    font-size: 20px;
+    font-weight: 600;
+    color: #0E2346;
+    margin-bottom: 14px;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+  }
+
+  .srv-items {
+    list-style: none;
+    flex: 1;
+  }
+
+  .srv-items li {
+    font-size: 16px;
+    color: #555;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0ec;
+    line-height: 1.5;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-weight: 300;
+  }
+
+  .srv-items li:last-child {
+    border-bottom: none;
+  }
+
+  .srv-items li::before {
+    content: '';
+    display: block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #F47920;
+    margin-top: 5px;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 640px) {
+    .servicios-grid {
+      grid-template-columns: 1fr;
+    }
+    .servicios-titulo {
+      font-size: 24px;
+    }
+  }
+</style>
