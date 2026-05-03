@@ -1,9 +1,12 @@
 ---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '')
+
 const marcas = [
-  { nombre: 'Siemens', categoria: 'Automatización' },
+  { nombre: 'Makita', categoria: 'Herramientas', logo: `${base}/images/marcas/makita.webp` },
   { nombre: 'Endress+Hauser', categoria: 'Instrumentación' },
   { nombre: 'Schneider Electric', categoria: 'Control' },
   { nombre: 'ABB', categoria: 'Electrónica' },
+  // { nombre: 'Siemens', categoria: 'Automatización' },
   // { nombre: 'Yokogawa', categoria: 'Medición' },
   // { nombre: 'Honeywell', categoria: 'Automatización' },
   // { nombre: 'Phoenix Contact', categoria: 'Conectividad' },
@@ -31,10 +34,14 @@ const marcas = [
     <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-gray-200 border border-gray-200">
       {marcas.map(marca => (
         <div class="group bg-white hover:bg-white py-14 px-6 flex flex-col items-center justify-center gap-4 transition-colors cursor-default">
-          <div class="w-16 h-16 flex items-center justify-center">
-            <span class="text-[#1B3A6B] group-hover:text-[#F47920] font-semibold tracking-tight transition-colors" style="font-size: 1.75rem; letter-spacing: -0.02em;">
-              {marca.nombre.substring(0, 2)}
-            </span>
+          <div class="flex items-center justify-center" style="width: 157px; height: 90px;">
+            {marca.logo ? (
+              <img src={marca.logo} alt={`Logo ${marca.nombre}`} class="max-h-full max-w-full object-contain" loading="lazy" />
+            ) : (
+              <span class="text-[#1B3A6B] group-hover:text-[#F47920] font-semibold tracking-tight transition-colors" style="font-size: 1.75rem; letter-spacing: -0.02em;">
+                {marca.nombre.substring(0, 2)}
+              </span>
+            )}
           </div>
           <p class="text-[#0E2346] font-medium tracking-tight text-center" style="font-size: 1.05rem;">
             {marca.nombre}
