@@ -3,7 +3,7 @@ export const prerender = true
 
 import Layout from '../../layouts/Layout.astro'
 import Breadcrumb from '../../components/ui/Breadcrumb.astro'
-import { getProductoBySlug, formatearPrecio, getImagenProducto, getProductos } from '../../lib/woocommerce.js'
+import { getProductoBySlug, formatearPrecio, getImagenProducto, getProductos, limpiarHtml } from '../../lib/woocommerce.js'
 
 export async function getStaticPaths() {
   const productos = await getProductos()
@@ -21,11 +21,19 @@ if (!producto) {
 
 const precio = formatearPrecio(producto.price)
 const imagen = getImagenProducto(producto)
+
+// SEO: Astro genera los meta tags directamente con datos correctos.
+// NO usamos yoast_head de la API porque Yoast genera URLs apuntando
+// al WordPress interno (ramsy.cl/admin/) en vez del frontend (ramsy.cl/).
+const descFallback = limpiarHtml(producto.short_description || producto.description || '')
+const canonical    = `https://ramsy.cl/prueba/productos/${producto.slug}`
 ---
 
-<Layout 
-  title={producto.name} 
-  description={producto.short_description || producto.description}
+<Layout
+  title={producto.name}
+  description={descFallback}
+  canonical={canonical}
+  ogImage={imagen !== '/placeholder-producto.jpg' ? imagen : undefined}
 >
   <Breadcrumb 
     items={[

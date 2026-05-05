@@ -6,9 +6,24 @@ import Footer from '../components/layout/Footer.astro'
 interface Props {
   title: string
   description?: string
+  /** HTML crudo que genera Yoast SEO (viene de yoast_head en la API de WooCommerce) */
+  yoastHead?: string
+  /** URL canónica de la página (ej: https://ramsy.cl/productos/sensor-de-flujo) */
+  canonical?: string
+  /** URL de imagen para og:image de fallback */
+  ogImage?: string
 }
 
-const { title, description = 'Instrumentación y electrónica industrial' } = Astro.props
+const {
+  title,
+  description = 'Instrumentación y electrónica industrial',
+  yoastHead,
+  canonical,
+  ogImage,
+} = Astro.props
+
+const pageTitle  = title ? `${title} | RAMSY` : 'RAMSY | Instrumentación y Electrónica Industrial'
+const canonicalUrl = canonical ?? Astro.url.href
 ---
 
 <!DOCTYPE html>
@@ -16,8 +31,32 @@ const { title, description = 'Instrumentación y electrónica industrial' } = As
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content={description} />
-    <title>{title} | RAMSY</title>
+
+    {yoastHead ? (
+      // ── Yoast SEO activo: inyectar el <head> generado por Yoast ──────────
+      // Yoast incluye: <title>, meta description, canonical, og:*, twitter:*, schema.org
+      // Solo dejamos charset y viewport (arriba) y los recursos que Yoast no maneja.
+      <Fragment set:html={yoastHead} />
+    ) : (
+      // ── Fallback cuando Yoast no está disponible aún ─────────────────────
+      <>
+        <title>{pageTitle}</title>
+        <meta name="description" content={description} />
+        <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:type"        content="website" />
+        <meta property="og:title"       content={pageTitle} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url"         content={canonicalUrl} />
+        <meta property="og:site_name"   content="RAMSY" />
+        <meta property="og:locale"      content="es_CL" />
+        {ogImage && <meta property="og:image" content={ogImage} />}
+        <meta name="twitter:card"        content="summary_large_image" />
+        <meta name="twitter:title"       content={pageTitle} />
+        <meta name="twitter:description" content={description} />
+        {ogImage && <meta name="twitter:image" content={ogImage} />}
+      </>
+    )}
+
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
