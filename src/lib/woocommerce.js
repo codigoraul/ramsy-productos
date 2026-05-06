@@ -117,7 +117,7 @@ async function wcFetch(endpoint, params = {}, { useCache = true } = {}) {
  */
 export async function getProductos(opts = {}) {
   const {
-    perPage = 20,
+    perPage = 100,
     page = 1,
     category,
     search,
