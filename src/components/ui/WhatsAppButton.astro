@@ -1,0 +1,80 @@
+---
+// Botón flotante de WhatsApp
+const phoneNumber = '56981739992' // Sin espacios ni signos
+const message = 'Hola, necesito información sobre productos'
+const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`
+---
+
+<a
+  href={whatsappUrl}
+  target="_blank"
+  rel="noopener noreferrer"
+  class="whatsapp-button"
+  aria-label="Contactar por WhatsApp"
+>
+  <svg viewBox="0 0 32 32" fill="currentColor">
+    <path d="M16 0c-8.837 0-16 7.163-16 16 0 2.825 0.737 5.607 2.137 8.048l-2.137 7.952 7.933-2.127c2.42 1.37 5.173 2.127 8.067 2.127 8.837 0 16-7.163 16-16s-7.163-16-16-16zM16 29.467c-2.482 0-4.908-0.646-7.07-1.87l-0.507-0.292-4.713 1.262 1.262-4.669-0.292-0.508c-1.207-2.100-1.847-4.507-1.847-6.924 0-7.435 6.050-13.485 13.485-13.485s13.485 6.050 13.485 13.485c0 7.435-6.050 13.485-13.485 13.485zM21.960 18.828c-0.306-0.153-1.81-0.892-2.090-0.994s-0.484-0.153-0.688 0.153c-0.204 0.306-0.792 0.994-0.971 1.198s-0.357 0.230-0.663 0.077c-0.306-0.153-1.292-0.476-2.460-1.519-0.909-0.812-1.523-1.815-1.702-2.121s-0.018-0.472 0.134-0.624c0.138-0.137 0.306-0.357 0.459-0.536s0.204-0.306 0.306-0.51c0.102-0.204 0.051-0.383-0.026-0.536s-0.688-1.659-0.943-2.271c-0.248-0.595-0.5-0.514-0.688-0.524-0.178-0.009-0.382-0.011-0.586-0.011s-0.536 0.077-0.817 0.383c-0.281 0.306-1.073 1.049-1.073 2.558s1.099 2.968 1.251 3.172c0.153 0.204 2.156 3.289 5.223 4.612 0.729 0.314 1.298 0.502 1.741 0.643 0.732 0.232 1.398 0.199 1.924 0.121 0.587-0.088 1.81-0.74 2.064-1.454s0.255-1.326 0.178-1.454c-0.077-0.128-0.281-0.204-0.587-0.357z"/>
+  </svg>
+</a>
+
+<style>
+  .whatsapp-button {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 60px;
+    height: 60px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+    color: white;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    cursor: pointer;
+  }
+
+  .whatsapp-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+  }
+
+  .whatsapp-button svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  /* Animación de pulso */
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+    }
+    50% {
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.7);
+    }
+    100% {
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+    }
+  }
+
+  .whatsapp-button {
+    animation: pulse 2s infinite;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .whatsapp-button {
+      bottom: 20px;
+      right: 20px;
+      width: 56px;
+      height: 56px;
+    }
+    
+    .whatsapp-button svg {
+      width: 28px;
+      height: 28px;
+    }
+  }
+</style>

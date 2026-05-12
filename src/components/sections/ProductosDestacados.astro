@@ -93,7 +93,7 @@ const productos = await getProductos({ perPage: 8 })
     {/* Botón ver todos */}
     <div class="text-center">
       <a 
-        href="/productos" 
+        href={`${base}/productos`}
         class="inline-flex items-center gap-3 bg-[#F47920] hover:bg-[#d66a1a] text-white font-medium px-10 py-4 transition-colors"
       >
         Ver todos los productos
