@@ -43,8 +43,8 @@ export default function BuscadorModal() {
       setLoading(true)
       try {
         const wpUrl = 'https://ramsy.cl/admin'
-        const consumerKey = 'ck_4bc9a5870b1c8504a3a9a206c783c1aec5af39a3'
-        const consumerSecret = 'cs_87087f5cab05a34150e5bf71005ecec341f70b58'
+        const consumerKey = 'ck_4e3259e12ff2fda1cc0462b28a4d8e2137349cb1'
+        const consumerSecret = 'cs_a41a392af5b228ac4c4bc81df6be09f30df42a64'
         
         // Usar autenticación básica en headers
         const auth = btoa(`${consumerKey}:${consumerSecret}`)
@@ -299,8 +299,8 @@ function BuscadorModalInterno({ onClose }) {
       setLoading(true)
       try {
         const wpUrl = 'https://ramsy.cl/admin'
-        const consumerKey = 'ck_4bc9a5870b1c8504a3a9a206c783c1aec5af39a3'
-        const consumerSecret = 'cs_87087f5cab05a34150e5bf71005ecec341f70b58'
+        const consumerKey = 'ck_4e3259e12ff2fda1cc0462b28a4d8e2137349cb1'
+        const consumerSecret = 'cs_a41a392af5b228ac4c4bc81df6be09f30df42a64'
         
         // Usar autenticación básica en headers
         const auth = btoa(`${consumerKey}:${consumerSecret}`)
