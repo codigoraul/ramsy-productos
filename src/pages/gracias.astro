@@ -1,0 +1,67 @@
+---
+import Layout from '../layouts/Layout.astro'
+
+const base = import.meta.env.BASE_URL
+---
+
+<Layout
+  title="¡Gracias por tu compra!"
+  description="Tu pedido ha sido recibido correctamente."
+>
+  <section class="py-24 bg-white min-h-[60vh] flex items-center">
+    <div class="max-w-[680px] mx-auto px-6 text-center">
+
+      <!-- Ícono de éxito -->
+      <div class="w-20 h-20 mx-auto mb-8 rounded-full bg-[#F5F5F0] flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-[#F47920]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+
+      <p class="text-[#F47920] text-sm font-medium uppercase tracking-[0.22em] mb-5">
+        Pago confirmado
+      </p>
+
+      <h1 class="text-[#0E2346] font-semibold mb-6" style="font-size: 2.2rem;">
+        ¡Gracias por tu compra!
+      </h1>
+
+      <p class="text-gray-600 font-light leading-[1.7] mb-2" style="font-size: 1.15rem;">
+        Tu pago se realizó con éxito y tu pedido ha sido recibido.
+      </p>
+
+      <p id="numero-pedido" class="text-[#0E2346] font-medium mb-8" style="font-size: 1.15rem;"></p>
+
+      <p class="text-gray-600 font-light leading-[1.7] mb-12">
+        Te enviamos un correo con el detalle de tu compra. Si tienes alguna duda,
+        no dudes en contactarnos.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href={`${base}/productos`}
+          class="inline-block bg-[#F47920] text-white font-medium px-8 py-3.5 hover:bg-[#d96a18] transition-colors"
+        >
+          Seguir comprando
+        </a>
+        <a
+          href={`${base}/`}
+          class="inline-block border border-[#0E2346] text-[#0E2346] font-medium px-8 py-3.5 hover:bg-[#0E2346] hover:text-white transition-colors"
+        >
+          Volver al inicio
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <script is:inline>
+    // Mostrar el número de pedido si viene en la URL (?pedido=197)
+    const params = new URLSearchParams(window.location.search)
+    const pedido = params.get('pedido')
+    if (pedido) {
+      const el = document.getElementById('numero-pedido')
+      if (el) el.textContent = `N.º de pedido: ${pedido}`
+    }
+  </script>
+</Layout>
