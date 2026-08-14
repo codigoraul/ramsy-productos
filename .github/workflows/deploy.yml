@@ -10,6 +10,7 @@ on:
     - cron: '0 * * * *'  # Ejecutar cada hora
   workflow_dispatch:  # Permitir ejecución manual
 
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
