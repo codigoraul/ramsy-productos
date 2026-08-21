@@ -17,6 +17,10 @@ pnpm-debug.log*
 .env
 .env.production
 
+# contacto-config.php se versiona para que el deploy lo suba.
+# El repo es publico: no pongas credenciales ahi. Si necesitas guardar datos
+# sensibles, subelo a mano por FTP y vuelve a ignorarlo.
+
 # macOS-specific files
 .DS_Store
 
