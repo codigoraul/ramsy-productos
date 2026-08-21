@@ -10,25 +10,32 @@
  *
  *      define( 'RAMSY_GITHUB_TOKEN', 'ghp_tu_token_aqui' );
  *
- * 2. Pega este archivo como snippet en el plugin Code Snippets (ejecutar en todas partes)
- *    o incluyelo desde el functions.php del tema hijo.
+ * 2. Sube este archivo a wp-content/mu-plugins/github-deploy-trigger.php
  *
  * El token NUNCA debe ir en este archivo ni subirse al repositorio.
+ *
+ * IMPORTANTE: el workflow deploy.yml debe tener este disparador agregado:
+ *
+ *   repository_dispatch:
+ *     types: [wp-content-updated]
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'RAMSY_GITHUB_REPO', 'codigoraul/ramsy-productos' );
-define( 'RAMSY_GITHUB_EVENT', 'wp-content-updated' );
+if ( ! defined( 'RAMSY_GITHUB_REPO' ) ) {
+	define( 'RAMSY_GITHUB_REPO', 'codigoraul/ramsy-productos' );
+}
+
+if ( ! defined( 'RAMSY_GITHUB_EVENT' ) ) {
+	define( 'RAMSY_GITHUB_EVENT', 'wp-content-updated' );
+}
 
 /**
  * Envia el repository_dispatch a GitHub.
  */
 function ramsy_github_dispatch_now() {
-	delete_transient( 'ramsy_github_deploy_pending' );
-
 	if ( ! defined( 'RAMSY_GITHUB_TOKEN' ) || ! RAMSY_GITHUB_TOKEN ) {
 		error_log( '[Ramsy deploy] Falta RAMSY_GITHUB_TOKEN en wp-config.php — no se disparo el deploy.' );
 		return;
@@ -37,15 +44,16 @@ function ramsy_github_dispatch_now() {
 	$response = wp_remote_post(
 		'https://api.github.com/repos/' . RAMSY_GITHUB_REPO . '/dispatches',
 		array(
-			'timeout' => 20,
-			'headers' => array(
+			'timeout'  => 20,
+			'blocking' => false, // No hacer esperar al usuario a que WordPress termine de cargar.
+			'headers'  => array(
 				'Accept'               => 'application/vnd.github+json',
 				'Authorization'        => 'Bearer ' . RAMSY_GITHUB_TOKEN,
 				'X-GitHub-Api-Version' => '2022-11-28',
 				'Content-Type'         => 'application/json',
 				'User-Agent'           => 'ramsy-wp-webhook',
 			),
-			'body'    => wp_json_encode(
+			'body'     => wp_json_encode(
 				array(
 					'event_type'     => RAMSY_GITHUB_EVENT,
 					'client_payload' => array(
@@ -64,8 +72,8 @@ function ramsy_github_dispatch_now() {
 
 	$code = wp_remote_retrieve_response_code( $response );
 
-	// GitHub responde 204 No Content cuando acepta el dispatch.
-	if ( 204 === $code ) {
+	// GitHub responde 204 No Content cuando acepta el dispatch (o vacio si 'blocking' => false).
+	if ( 204 === $code || '' === $code ) {
 		error_log( '[Ramsy deploy] Deploy lanzado correctamente en GitHub Actions.' );
 	} else {
 		error_log( '[Ramsy deploy] GitHub respondio ' . $code . ': ' . wp_remote_retrieve_body( $response ) );
@@ -74,17 +82,26 @@ function ramsy_github_dispatch_now() {
 add_action( 'ramsy_github_deploy_event', 'ramsy_github_dispatch_now' );
 
 /**
- * Agenda el deploy con retardo, para agrupar varias ediciones seguidas
- * en un solo build en lugar de lanzar uno por cada guardado.
+ * Marca que hay un deploy pendiente para esta peticion. El envio real ocurre
+ * en 'shutdown', que corre siempre al final de la peticion en la que guardas,
+ * sin depender de WP-Cron ni de que alguien visite el sitio despues.
  */
 function ramsy_github_schedule_deploy() {
-	if ( get_transient( 'ramsy_github_deploy_pending' ) ) {
-		return;
+	if ( get_transient( 'ramsy_github_deploy_sent_recently' ) ) {
+		return; // Evita disparar 5 veces si guardas varias cosas seguidas en segundos.
 	}
-
-	set_transient( 'ramsy_github_deploy_pending', 1, 10 * MINUTE_IN_SECONDS );
-	wp_schedule_single_event( time() + 120, 'ramsy_github_deploy_event' );
+	set_transient( 'ramsy_github_deploy_sent_recently', 1, 30 );
+	$GLOBALS['ramsy_github_deploy_needed'] = true;
 }
+
+add_action(
+	'shutdown',
+	function () {
+		if ( ! empty( $GLOBALS['ramsy_github_deploy_needed'] ) ) {
+			ramsy_github_dispatch_now();
+		}
+	}
+);
 
 /**
  * Decide si el guardado de un post merece reconstruir el sitio.

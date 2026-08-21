@@ -443,7 +443,11 @@ const canonical    = `https://ramsy.cl/prueba/productos/${producto.slug}`
   const galeriaThumbs = document.querySelectorAll('.galeria-thumb')
   
   // Array de imágenes para el lightbox
-  const imagenesGaleria = Array.from(galeriaThumbs).map(thumb => thumb.getAttribute('data-imagen'))
+  // Si el producto no tiene galería (solo 1 imagen), no hay .galeria-thumb —
+  // en ese caso usamos la imagen principal como única imagen del lightbox.
+  const imagenesGaleria = galeriaThumbs.length > 0
+    ? Array.from(galeriaThumbs).map(thumb => thumb.getAttribute('data-imagen'))
+    : (imagenPrincipal ? [imagenPrincipal.getAttribute('src')] : [])
   let currentImageIndex = 0
   
   // Lightbox elements

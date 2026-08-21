@@ -7,7 +7,7 @@ $SITE_URL = (isset($_SERVER['HTTP_HOST']) && is_string($_SERVER['HTTP_HOST']) &&
   ? ('https://' . $_SERVER['HTTP_HOST'])
   : 'https://ramsy.cl';
 
-$TO_EMAILS_BASE = 'contacto@ramsy.cl';
+$TO_EMAILS_BASE = 'contacto@ramsy.cl, codigoraul@gmail.com, ramsyspa29@gmail.com';
 $TO_EMAIL = $TO_EMAILS_BASE;
 $FROM_EMAIL = 'contacto@ramsy.cl';
 $FROM_NAME = 'Ramsy';
