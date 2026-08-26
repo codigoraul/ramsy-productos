@@ -93,7 +93,7 @@ const canonicalUrl = canonical ?? Astro.url.href
         }
         if (localStorage.getItem('ramsy_bypass_maintenance') === '1') return
 
-        fetch('https://ramsy.cl/admin/wp-json/ramsy/v1/mantenimiento')
+        fetch('https://ramsy.cl/admin/wp-json/ramsy/v1/mantenimiento?t=' + Date.now())
           .then(function (r) { return r.json() })
           .then(function (data) {
             if (data && data.enabled) {
