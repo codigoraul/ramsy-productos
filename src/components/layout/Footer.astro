@@ -1,5 +1,5 @@
 ---
-const base = import.meta.env.BASE_URL
+const base = import.meta.env.BASE_URL.replace(/\/$/, '')
 ---
 
 <footer class="bg-[#0E2346] text-white font-light">
@@ -9,7 +9,7 @@ const base = import.meta.env.BASE_URL
 
     <!-- Columna 1: Marca -->
     <div class="md:col-span-1">
-      <a href={base} class="inline-block mb-6">
+      <a href={base || '/'} class="inline-block mb-6">
         <img 
           src={`${base}/logo-blanco.png`} 
           alt="Ramsy" 

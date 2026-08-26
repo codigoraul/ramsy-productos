@@ -25,7 +25,7 @@ const {
 
 const pageTitle  = title ? `${title} | RAMSY` : 'RAMSY | Instrumentación y Electrónica Industrial'
 const canonicalUrl = canonical ?? Astro.url.href
-const base = import.meta.env.BASE_URL
+const base = import.meta.env.BASE_URL.replace(/\/$/, '')
 ---
 
 <!DOCTYPE html>

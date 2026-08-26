@@ -1,7 +1,7 @@
 ---
 import { getCategorias } from '../../lib/woocommerce.js'
 
-const base = import.meta.env.BASE_URL
+const base = import.meta.env.BASE_URL.replace(/\/$/, '')
 
 // Obtener todas las categorías con productos
 const categorias = await getCategorias()

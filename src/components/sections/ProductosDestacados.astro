@@ -1,7 +1,7 @@
 ---
 import { getProductos, formatearPrecio, getImagenProducto } from '../../lib/woocommerce.js'
 
-const base = import.meta.env.BASE_URL
+const base = import.meta.env.BASE_URL.replace(/\/$/, '')
 
 // Obtener los primeros 8 productos (4 columnas x 2 filas)
 const productos = await getProductos({ perPage: 8 })

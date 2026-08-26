@@ -3,7 +3,7 @@ import Layout from '../../layouts/Layout.astro'
 import Breadcrumb from '../../components/ui/Breadcrumb.astro'
 import { getProductos, getCategorias, formatearPrecio, getImagenProducto } from '../../lib/woocommerce.js'
 
-const base = import.meta.env.BASE_URL
+const base = import.meta.env.BASE_URL.replace(/\/$/, '')
 
 const productos = await getProductos({ perPage: 20 })
 const categorias = await getCategorias()
