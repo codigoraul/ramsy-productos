@@ -25,6 +25,7 @@ const {
 
 const pageTitle  = title ? `${title} | RAMSY` : 'RAMSY | Instrumentación y Electrónica Industrial'
 const canonicalUrl = canonical ?? Astro.url.href
+const base = import.meta.env.BASE_URL
 ---
 
 <!DOCTYPE html>
@@ -66,7 +67,7 @@ const canonicalUrl = canonical ?? Astro.url.href
   <body class="bg-white text-gray-900">
     <!-- Overlay de mantenimiento: oculto por defecto, se muestra si WordPress reporta el modo activo -->
     <div id="ramsy-maintenance-overlay" style="display:none; position:fixed; inset:0; z-index:9999; background:linear-gradient(160deg, #0E2346 0%, #133065 100%); color:#fff; align-items:center; justify-content:center; flex-direction:column; text-align:center; padding:2rem; font-family: 'IBM Plex Sans', sans-serif;">
-      <img src="/logo-blanco.png" alt="RAMSY" style="width:150px; margin-bottom:2.5rem;" />
+      <img src={`${base}/logo-blanco.png`} alt="RAMSY" style="width:150px; margin-bottom:2.5rem;" />
 
       <div style="width:56px; height:56px; border-radius:50%; background:rgba(244,121,32,0.15); display:flex; align-items:center; justify-content:center; margin-bottom:1.75rem;">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#F47920" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
