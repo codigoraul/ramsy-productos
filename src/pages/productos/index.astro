@@ -105,9 +105,14 @@ const categorias = await getCategorias()
 
                   {/* Precio */}
                   <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                    <p class="text-[#0E2346] font-semibold text-2xl">
-                      {precio}
-                    </p>
+                    <div>
+                      <p class="text-[#0E2346] font-semibold text-2xl">
+                        {precio}
+                      </p>
+                      <p class="text-gray-400 font-light text-xs">
+                        IVA incluido
+                      </p>
+                    </div>
                     
                     {/* Stock badge */}
                     {producto.stock_status === 'instock' ? (

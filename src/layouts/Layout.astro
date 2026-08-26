@@ -64,11 +64,47 @@ const canonicalUrl = canonical ?? Astro.url.href
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=block" rel="stylesheet" />
   </head>
   <body class="bg-white text-gray-900">
-    <Header />
-    <main>
-      <slot />
-    </main>
-    <Footer />
-    <WhatsAppButton />
+    <!-- Overlay de mantenimiento: oculto por defecto, se muestra si WordPress reporta el modo activo -->
+    <div id="ramsy-maintenance-overlay" style="display:none; position:fixed; inset:0; z-index:9999; background:#0E2346; color:#fff; align-items:center; justify-content:center; flex-direction:column; text-align:center; padding:2rem;">
+      <img src="/logo-blanco.png" alt="RAMSY" style="width:160px; margin-bottom:2rem;" />
+      <h1 style="font-size:1.8rem; font-weight:600; margin-bottom:1rem;">Sitio en mantenimiento</h1>
+      <p style="max-width:32rem; font-weight:300; opacity:0.85; line-height:1.6;">
+        Estamos realizando mejoras en nuestra tienda online. Volveremos a estar disponibles muy pronto.
+        Para consultas urgentes, contáctanos directamente por WhatsApp.
+      </p>
+    </div>
+
+    <div id="ramsy-site-content">
+      <Header />
+      <main>
+        <slot />
+      </main>
+      <Footer />
+      <WhatsAppButton />
+    </div>
+
+    <script is:inline>
+      (function () {
+        // Bypass: agregar ?ramsy_bypass=1 a la URL una vez para seguir viendo el sitio normal
+        // mientras el mantenimiento está activo (útil para revisar antes de publicar).
+        var params = new URLSearchParams(window.location.search)
+        if (params.get('ramsy_bypass') === '1') {
+          localStorage.setItem('ramsy_bypass_maintenance', '1')
+        }
+        if (localStorage.getItem('ramsy_bypass_maintenance') === '1') return
+
+        fetch('https://ramsy.cl/admin/wp-json/ramsy/v1/mantenimiento')
+          .then(function (r) { return r.json() })
+          .then(function (data) {
+            if (data && data.enabled) {
+              document.getElementById('ramsy-maintenance-overlay').style.display = 'flex'
+              document.getElementById('ramsy-site-content').style.display = 'none'
+            }
+          })
+          .catch(function () {
+            // Si falla la consulta (ej. WordPress caído), no bloqueamos el sitio.
+          })
+      })()
+    </script>
   </body>
 </html>
