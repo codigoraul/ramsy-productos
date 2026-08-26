@@ -8,9 +8,7 @@ return [
   'SITE_URL' => 'https://www.ramsy.cl',
 
   // Destinatarios del formulario (separados por coma si son varios).
-  // Correos de prueba: se agregan codigoraul@gmail.com y ramsyspa29@gmail.com
-  // ademas de contacto@ramsy.cl mientras se valida el envio.
-  'TO_EMAIL' => 'contacto@ramsy.cl, codigoraul@gmail.com, ramsyspa29@gmail.com',
+  'TO_EMAIL' => 'contacto@ramsy.cl, ramsyspa29@gmail.com',
 
   'FROM_EMAIL' => 'contacto@ramsy.cl',
   'FROM_NAME' => 'Ramsy',
