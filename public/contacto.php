@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-$BASE_PATH = '/prueba';
+$BASE_PATH = '';
 $SITE_URL = (isset($_SERVER['HTTP_HOST']) && is_string($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] !== '')
   ? ('https://' . $_SERVER['HTTP_HOST'])
   : 'https://ramsy.cl';

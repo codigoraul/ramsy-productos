@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 return [
   // Subcarpeta donde vive el sitio. Vacío si está en la raíz, '/prueba' en el entorno de pruebas.
-  'BASE_PATH' => '/prueba',
+  'BASE_PATH' => '',
   'SITE_URL' => 'https://www.ramsy.cl',
 
   // Destinatarios del formulario (separados por coma si son varios).

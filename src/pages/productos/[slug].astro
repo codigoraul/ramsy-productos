@@ -28,7 +28,7 @@ const imagen = getImagenProducto(producto)
 // NO usamos yoast_head de la API porque Yoast genera URLs apuntando
 // al WordPress interno (ramsy.cl/admin/) en vez del frontend (ramsy.cl/).
 const descFallback = limpiarHtml(producto.short_description || producto.description || '')
-const canonical    = `https://ramsy.cl/prueba/productos/${producto.slug}`
+const canonical    = `https://ramsy.cl/productos/${producto.slug}`
 ---
 
 <Layout
