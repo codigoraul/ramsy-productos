@@ -101,6 +101,10 @@ export default function CarritoDrawer() {
         {/* Footer drawer */}
         {items.length > 0 && (
           <div className="px-5 py-4 border-t border-gray-100 bg-gray-50">
+            <div className="flex justify-between items-center text-xs text-gray-400 mb-2">
+              <span>IVA (19% incluido)</span>
+              <span>${Math.round(total - total / 1.19).toLocaleString('es-CL')}</span>
+            </div>
             <div className="flex justify-between items-center mb-4">
               <span className="text-sm text-gray-500 uppercase tracking-wider font-semibold">Total</span>
               <span className="text-xl font-bold text-[#0E2346]">
