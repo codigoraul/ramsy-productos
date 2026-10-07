@@ -1,17 +1,25 @@
 ---
-const base = import.meta.env.BASE_URL.replace(/\/$/, '')
+import { getLogosClientes } from '../../lib/logosClientes.js'
 
-const marcas = [
-  { nombre: 'Makita', categoria: 'Herramientas', logo: `${base}/images/marcas/makita.webp` },
-  { nombre: 'Endress+Hauser', categoria: 'Instrumentación' },
-  { nombre: 'Schneider Electric', categoria: 'Control' },
-  { nombre: 'ABB', categoria: 'Electrónica' },
-  // { nombre: 'Siemens', categoria: 'Automatización' },
-  // { nombre: 'Yokogawa', categoria: 'Medición' },
-  // { nombre: 'Honeywell', categoria: 'Automatización' },
-  // { nombre: 'Phoenix Contact', categoria: 'Conectividad' },
-  // { nombre: 'Wago', categoria: 'Control' },
-]
+// Logos y enlaces se editan en WordPress → Logos clientes (imagen destacada, Enlace, Orden).
+const logos = await getLogosClientes()
+
+// Rubro que se muestra bajo cada marca (si la marca no está aquí, no se muestra rubro)
+const categorias = {
+  'makita': 'Herramientas',
+  'abb': 'Electrónica',
+  'schneider electric': 'Control',
+  'phoenix contact': 'Conectividad',
+  'endress+hauser': 'Instrumentación',
+}
+
+const marcas = logos.map((l) => ({
+  nombre: l.nombre,
+  categoria: categorias[l.nombre.toLowerCase()] ?? '',
+  logo: l.logo,
+  url: l.url,
+  Tag: l.url ? 'a' : 'div',
+}))
 ---
 
 <section class="py-32 bg-[#F5F5F0]">
@@ -33,7 +41,7 @@ const marcas = [
     <!-- Grid marcas -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-gray-200 border border-gray-200">
       {marcas.map(marca => (
-        <div class="group bg-white hover:bg-white py-14 px-6 flex flex-col items-center justify-center gap-4 transition-colors cursor-default">
+        <marca.Tag href={marca.url || undefined} target={marca.url ? '_blank' : undefined} rel={marca.url ? 'noopener noreferrer' : undefined} class="group bg-white hover:bg-white py-14 px-6 flex flex-col items-center justify-center gap-4 transition-colors">
           <div class="flex items-center justify-center" style="width: 157px; height: 90px;">
             {marca.logo ? (
               <img src={marca.logo} alt={`Logo ${marca.nombre}`} class="max-h-full max-w-full object-contain" loading="lazy" />
@@ -46,10 +54,12 @@ const marcas = [
           <p class="text-[#0E2346] font-medium tracking-tight text-center" style="font-size: 1.05rem;">
             {marca.nombre}
           </p>
-          <p class="text-gray-400 text-xs font-light tracking-wider uppercase">
-            {marca.categoria}
-          </p>
-        </div>
+          {marca.categoria && (
+            <p class="text-gray-400 text-xs font-light tracking-wider uppercase">
+              {marca.categoria}
+            </p>
+          )}
+        </marca.Tag>
       ))}
     </div>
 
