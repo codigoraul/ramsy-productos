@@ -5,8 +5,21 @@ import { getProductos, getCategorias, formatearPrecio, getImagenProducto } from 
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '')
 
-const productos = await getProductos({ perPage: 20 })
+// Trae TODOS los productos (de 100 en 100) para que el filtro por categoría funcione sobre el catálogo completo
+let productos = []
+for (let page = 1; page <= 20; page++) {
+  const lote = await getProductos({ perPage: 100, page })
+  productos.push(...lote)
+  if (lote.length < 100) break
+}
 const categorias = await getCategorias()
+
+// Barra compacta: las categorías con más productos van como botones; el resto, en el menú "Más categorías"
+const ordenadas = [...(categorias || [])]
+  .filter(c => c.slug !== 'sin-categorizar')
+  .sort((a, b) => b.count - a.count)
+const principales = ordenadas.slice(0, 7)
+const restantes = ordenadas.slice(7).sort((a, b) => a.name.localeCompare(b.name, 'es'))
 ---
 
 <Layout 
@@ -39,22 +52,34 @@ const categorias = await getCategorias()
         </p>
       </div>
 
-      <!-- Filtros por categoría -->
+      <!-- Filtros por categoría (barra compacta) -->
       {categorias && categorias.length > 0 && (
-        <div class="mb-12 pb-8 border-b border-gray-200">
-          <div class="flex flex-wrap gap-3">
-            <button class="categoria-filter active px-6 py-3 bg-[#F47920] text-white font-medium tracking-wide hover:bg-[#d66a1a] transition-colors" data-categoria="todas">
-              Todas
-            </button>
-            {categorias.map(cat => (
-              <button 
-                class="categoria-filter px-6 py-3 bg-gray-100 text-gray-700 font-medium tracking-wide hover:bg-gray-200 transition-colors"
-                data-categoria={cat.slug}
-              >
-                {cat.name}
+        <div class="mb-10 pb-6 border-b border-gray-200">
+          <div class="flex flex-wrap items-center gap-2">
+            <button class="categoria-filter chip is-active" data-categoria="todas">Todas</button>
+            {principales.map(cat => (
+              <button class="categoria-filter chip" data-categoria={cat.slug}>
+                {cat.name} <span class="chip-count">{cat.count}</span>
               </button>
             ))}
+
+            {restantes.length > 0 && (
+              <div class="relative" id="mas-categorias">
+                <button type="button" id="mas-toggle" class="chip chip-mas" aria-expanded="false" aria-controls="mas-panel">
+                  <span id="mas-label">Más categorías</span>
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                </button>
+                <div id="mas-panel" class="mas-panel hidden" role="listbox">
+                  {restantes.map(cat => (
+                    <button class="categoria-filter mas-item" data-categoria={cat.slug} data-nombre={cat.name}>
+                      <span>{cat.name}</span> <span class="chip-count">{cat.count}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
+          <p id="resultado-count" class="mt-4 text-sm text-gray-500 font-light"></p>
         </div>
       )}
 
@@ -64,7 +89,7 @@ const categorias = await getCategorias()
           {productos.map(producto => {
             const precio = formatearPrecio(producto.price)
             const imagen = getImagenProducto(producto)
-            const categoriaSlug = producto.categories?.[0]?.slug || ''
+            const categoriaSlug = (producto.categories || []).map(c => c.slug).join(' ')
             
             return (
               <article 
@@ -160,6 +185,29 @@ const categorias = await getCategorias()
 </Layout>
 
 <style>
+  .chip {
+    display: inline-flex; align-items: center; gap: .4rem;
+    padding: .5rem 1rem; font-size: .9rem; font-weight: 500;
+    color: #374151; background: #f3f4f6; border-radius: 9999px;
+    transition: background-color .2s, color .2s;
+  }
+  .chip:hover { background: #e5e7eb; }
+  .chip.is-active { background: #F47920; color: #fff; }
+  .chip-count { font-size: .75rem; opacity: .6; }
+  .chip.is-active .chip-count { opacity: .85; }
+  .chip-mas { background: #fff; border: 1px solid #d1d5db; }
+  .mas-panel {
+    position: absolute; z-index: 30; top: calc(100% + .5rem); left: 0;
+    width: 320px; max-height: 340px; overflow-y: auto;
+    background: #fff; border: 1px solid #e5e7eb; border-radius: .75rem;
+    box-shadow: 0 16px 40px -12px rgba(14,35,70,.25); padding: .5rem;
+  }
+  .mas-item {
+    display: flex; justify-content: space-between; gap: 1rem; width: 100%;
+    text-align: left; padding: .55rem .75rem; font-size: .9rem; color: #374151; border-radius: .5rem;
+  }
+  .mas-item:hover { background: #f3f4f6; }
+  .mas-item.is-active { background: #FFF1E6; color: #F47920; font-weight: 600; }
   .line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -169,52 +217,63 @@ const categorias = await getCategorias()
 </style>
 
 <script>
-  // Filtro por categorías
   const filterButtons = document.querySelectorAll('.categoria-filter')
   const productCards = document.querySelectorAll('.producto-card')
+  const toggle = document.getElementById('mas-toggle')
+  const panel = document.getElementById('mas-panel')
+  const masLabel = document.getElementById('mas-label')
+  const resultado = document.getElementById('resultado-count')
 
-  // Función para filtrar productos
   function filtrarProductos(categoria) {
-    // Update active button
+    let activoEnMenu = null
     filterButtons.forEach(btn => {
-      const btnCategoria = btn.getAttribute('data-categoria')
-      if (btnCategoria === categoria) {
-        btn.classList.add('active', 'bg-[#F47920]', 'text-white')
-        btn.classList.remove('bg-gray-100', 'text-gray-700')
-      } else {
-        btn.classList.remove('active', 'bg-[#F47920]', 'text-white')
-        btn.classList.add('bg-gray-100', 'text-gray-700')
-      }
+      const activo = btn.getAttribute('data-categoria') === categoria
+      btn.classList.toggle('is-active', activo)
+      if (activo && btn.classList.contains('mas-item')) activoEnMenu = btn.getAttribute('data-nombre')
     })
-    
-    // Filter products
+
+    // El botón "Más categorías" muestra la categoría elegida del menú
+    if (toggle && masLabel) {
+      masLabel.textContent = activoEnMenu || 'Más categorías'
+      toggle.classList.toggle('is-active', !!activoEnMenu)
+    }
+
+    let visibles = 0
     productCards.forEach(card => {
-      if (categoria === 'todas') {
-        card.style.display = 'block'
-      } else {
-        const categorias = card.getAttribute('data-categorias')
-        if (categorias && categorias.includes(categoria)) {
-          card.style.display = 'block'
-        } else {
-          card.style.display = 'none'
-        }
-      }
+      const categorias = (card.getAttribute('data-categorias') || '').split(' ')
+      const mostrar = categoria === 'todas' || categorias.includes(categoria)
+      card.style.display = mostrar ? 'block' : 'none'
+      if (mostrar) visibles++
     })
+
+    if (resultado) {
+      resultado.textContent = visibles === 1 ? '1 producto' : `${visibles} productos`
+    }
   }
 
-  // Leer parámetro de URL al cargar la página
-  const urlParams = new URLSearchParams(window.location.search)
-  const categoriaInicial = urlParams.get('categoria')
-  
-  if (categoriaInicial) {
-    filtrarProductos(categoriaInicial)
+  function cerrarMenu() {
+    panel?.classList.add('hidden')
+    toggle?.setAttribute('aria-expanded', 'false')
   }
 
-  // Event listeners para los botones
+  toggle?.addEventListener('click', (e) => {
+    e.stopPropagation()
+    const abierto = !panel.classList.toggle('hidden')
+    toggle.setAttribute('aria-expanded', String(abierto))
+  })
+  document.addEventListener('click', (e) => {
+    if (!document.getElementById('mas-categorias')?.contains(e.target)) cerrarMenu()
+  })
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') cerrarMenu() })
+
   filterButtons.forEach(button => {
     button.addEventListener('click', () => {
-      const categoria = button.getAttribute('data-categoria')
-      filtrarProductos(categoria)
+      filtrarProductos(button.getAttribute('data-categoria'))
+      cerrarMenu()
     })
   })
+
+  // Categoría inicial desde la URL (?categoria=slug) o todas
+  const categoriaInicial = new URLSearchParams(window.location.search).get('categoria')
+  filtrarProductos(categoriaInicial || 'todas')
 </script>

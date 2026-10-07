@@ -38,27 +38,34 @@ const marcas = logos.map((l) => ({
       </p>
     </div>
 
-    <!-- Grid marcas -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-gray-200 border border-gray-200">
+    <!-- Marcas: tarjetas de logo sin grilla ni bordes -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-14 items-start">
       {marcas.map(marca => (
-        <marca.Tag href={marca.url || undefined} target={marca.url ? '_blank' : undefined} rel={marca.url ? 'noopener noreferrer' : undefined} class="group bg-white hover:bg-white py-14 px-6 flex flex-col items-center justify-center gap-4 transition-colors">
-          <div class="flex items-center justify-center" style="width: 157px; height: 90px;">
-            {marca.logo ? (
-              <img src={marca.logo} alt={`Logo ${marca.nombre}`} class="max-h-full max-w-full object-contain" loading="lazy" />
-            ) : (
-              <span class="text-[#1B3A6B] group-hover:text-[#F47920] font-semibold tracking-tight transition-colors" style="font-size: 1.75rem; letter-spacing: -0.02em;">
-                {marca.nombre.substring(0, 2)}
-              </span>
+        <marca.Tag
+          href={marca.url || undefined}
+          target={marca.url ? '_blank' : undefined}
+          rel={marca.url ? 'noopener noreferrer' : undefined}
+          class="group flex flex-col items-center gap-5 text-center"
+        >
+          <div class="flex items-center justify-center" style="height: 104px;">
+            <img
+              src={marca.logo}
+              alt={`Logo ${marca.nombre}`}
+              loading="lazy"
+              class="rounded-2xl ring-1 ring-black/5 shadow-[0_6px_24px_-8px_rgba(14,35,70,0.25)] transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-[0_14px_32px_-10px_rgba(14,35,70,0.35)]"
+              style="height: 104px; width: auto; max-width: 100%; object-fit: contain;"
+            />
+          </div>
+          <div class="flex flex-col items-center gap-1.5">
+            <p class="text-[#0E2346] group-hover:text-[#F47920] font-medium tracking-tight transition-colors" style="font-size: 1.05rem;">
+              {marca.nombre}
+            </p>
+            {marca.categoria && (
+              <p class="text-gray-400 text-xs font-light tracking-wider uppercase">
+                {marca.categoria}
+              </p>
             )}
           </div>
-          <p class="text-[#0E2346] font-medium tracking-tight text-center" style="font-size: 1.05rem;">
-            {marca.nombre}
-          </p>
-          {marca.categoria && (
-            <p class="text-gray-400 text-xs font-light tracking-wider uppercase">
-              {marca.categoria}
-            </p>
-          )}
         </marca.Tag>
       ))}
     </div>

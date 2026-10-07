@@ -3,6 +3,33 @@ import { createPortal } from 'react-dom'
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '')
 
+const WP_URL = 'https://ramsy.cl/admin'
+
+// Convierte entidades HTML (&#8211; etc.) a texto normal
+function decodificar(texto = '') {
+  const el = document.createElement('textarea')
+  el.innerHTML = texto
+  return el.value
+}
+
+// Busca por nombre, SKU o descripción usando la Store API pública de WooCommerce (sin llaves)
+async function buscarProductos(query) {
+  const response = await fetch(
+    `${WP_URL}/wp-json/wc/store/v1/products?search=${encodeURIComponent(query)}&per_page=10`
+  )
+  if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`)
+  const productos = await response.json()
+  return productos.map(p => ({
+    id: p.id,
+    name: decodificar(p.name),
+    slug: p.slug,
+    price: p.prices?.price,
+    images: p.images,
+    sku: p.sku,
+    stock_status: p.is_in_stock ? 'instock' : 'outofstock',
+  }))
+}
+
 export default function BuscadorModal() {
   const [isOpen, setIsOpen] = useState(false)
   const [query, setQuery] = useState('')
@@ -42,39 +69,7 @@ export default function BuscadorModal() {
     const buscar = async () => {
       setLoading(true)
       try {
-        const wpUrl = 'https://ramsy.cl/admin'
-        const consumerKey = 'ck_4e3259e12ff2fda1cc0462b28a4d8e2137349cb1'
-        const consumerSecret = 'cs_a41a392af5b228ac4c4bc81df6be09f30df42a64'
-        
-        // Usar autenticación básica en headers
-        const auth = btoa(`${consumerKey}:${consumerSecret}`)
-        
-        const response = await fetch(
-          `${wpUrl}/wp-json/wc/v3/products?search=${encodeURIComponent(query)}&per_page=10`,
-          {
-            headers: {
-              'Authorization': `Basic ${auth}`,
-              'Content-Type': 'application/json'
-            }
-          }
-        )
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`)
-        }
-        
-        const productos = await response.json()
-        
-        // Mapear al formato esperado
-        const productosFormateados = productos.map(p => ({
-          id: p.id,
-          name: p.name,
-          slug: p.slug,
-          price: p.price,
-          images: p.images,
-          sku: p.sku,
-          stock_status: p.stock_status
-        }))
+        const productosFormateados = await buscarProductos(query)
         
         setResultados(productosFormateados)
       } catch (error) {
@@ -298,39 +293,7 @@ function BuscadorModalInterno({ onClose }) {
     const buscar = async () => {
       setLoading(true)
       try {
-        const wpUrl = 'https://ramsy.cl/admin'
-        const consumerKey = 'ck_4e3259e12ff2fda1cc0462b28a4d8e2137349cb1'
-        const consumerSecret = 'cs_a41a392af5b228ac4c4bc81df6be09f30df42a64'
-        
-        // Usar autenticación básica en headers
-        const auth = btoa(`${consumerKey}:${consumerSecret}`)
-        
-        const response = await fetch(
-          `${wpUrl}/wp-json/wc/v3/products?search=${encodeURIComponent(query)}&per_page=10`,
-          {
-            headers: {
-              'Authorization': `Basic ${auth}`,
-              'Content-Type': 'application/json'
-            }
-          }
-        )
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`)
-        }
-        
-        const productos = await response.json()
-        
-        // Mapear al formato esperado
-        const productosFormateados = productos.map(p => ({
-          id: p.id,
-          name: p.name,
-          slug: p.slug,
-          price: p.price,
-          images: p.images,
-          sku: p.sku,
-          stock_status: p.stock_status
-        }))
+        const productosFormateados = await buscarProductos(query)
         
         setResultados(productosFormateados)
       } catch (error) {
